@@ -3,20 +3,15 @@ package com.fjj.phoneprotect.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fjj.phoneprotect.HomeActivity;
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.utils.AppInfoUtils;
 import com.fjj.phoneprotect.utils.StreamUtils;
 import com.fjj.phoneprotect.utils.ToastUtils;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.orhanobut.logger.Logger;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,9 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.nio.charset.MalformedInputException;
 
 public class SplashActivity extends Activity {
 
