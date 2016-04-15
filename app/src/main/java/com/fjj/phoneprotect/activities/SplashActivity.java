@@ -7,8 +7,11 @@ import android.widget.TextView;
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.utils.AppInfoUtils;
 import com.fjj.phoneprotect.utils.StreamUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.orhanobut.logger.Logger;
 
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,14 +35,31 @@ public class SplashActivity extends Activity {
         //初始化logger
         Logger.init("splash");
         checkVersion();
+
+
     }
 
     /**
      * 检查版本
      */
     void checkVersion() {
+//        AsyncHttpClient插件
+        AsyncHttpClient shc = new AsyncHttpClient();
+        String url = getString(R.string.checkurl);
+        shc.get(url, null, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Logger.i("res:" + new String(bytes));
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Logger.i("res:" + throwable.getMessage());
+            }
+        });
+
 //创建url
-        new Thread() {
+        /*new Thread() {
             @Override
             public void run() {
                 try {
@@ -73,6 +93,6 @@ public class SplashActivity extends Activity {
                 }
                 super.run();
             }
-        }.start();
+        }.start();*/
     }
 }
