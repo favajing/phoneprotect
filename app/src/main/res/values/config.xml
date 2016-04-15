@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="checkurl">http://10.10.1.28:2222/upload2.json</string>
+    <string name="checkurl">http://192.168.31.231/upload.json</string>
 </resources>

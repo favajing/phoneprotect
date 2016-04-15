@@ -1,12 +1,17 @@
 package com.fjj.phoneprotect.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fjj.phoneprotect.HomeActivity;
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.utils.AppInfoUtils;
 import com.fjj.phoneprotect.utils.StreamUtils;
+import com.fjj.phoneprotect.utils.ToastUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.orhanobut.logger.Logger;
@@ -18,7 +23,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.MalformedInputException;
 
 public class SplashActivity extends Activity {
 
@@ -44,22 +52,23 @@ public class SplashActivity extends Activity {
      */
     void checkVersion() {
 //        AsyncHttpClient插件
-        AsyncHttpClient shc = new AsyncHttpClient();
+        /*AsyncHttpClient shc = new AsyncHttpClient();
         String url = getString(R.string.checkurl);
         shc.get(url, null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Logger.i("res:" + new String(bytes));
+                Log.d("splash", "res:" + new String(bytes));
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                 Logger.i("res:" + throwable.getMessage());
             }
-        });
+        });*/
 
 //创建url
-        /*new Thread() {
+        new Thread() {
             @Override
             public void run() {
                 try {
@@ -74,7 +83,6 @@ public class SplashActivity extends Activity {
                     if (code == 200) {
                         InputStream input = con.getInputStream();
                         String res = StreamUtils.readStreamToString(input);
-                        Logger.i("res:" + res);
                         if (res == null) {
                             Logger.e("解析失败");
                         } else {
@@ -82,17 +90,29 @@ public class SplashActivity extends Activity {
                             int versioncode = json.getInt("version");
                             String downurl = json.getString("downloadurl");
                             String desc = json.getString("desc");
-                            Logger.i("version:" + versioncode);
-                            Logger.i("downurl:" + downurl);
-                            Logger.i("desc:" + desc);
+                            //判断版本
+                            if (versioncode > AppInfoUtils.getVersionCode(getApplicationContext())) {
+                                //有新版本
+                                Logger.i("有新版本");
+                            } else {
+                                //无新版本
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(intent);
+                            }
                         }
                     }
-                } catch (Exception e) {
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
-                    Logger.e("网络异常");
+                    ToastUtils.show(SplashActivity.this,"配置错误");
+                } catch (JSONException e) {
+                    ToastUtils.show(SplashActivity.this,"解析错误");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    ToastUtils.show(SplashActivity.this,"网络错误");
+                    e.printStackTrace();
                 }
                 super.run();
             }
-        }.start();*/
+        }.start();
     }
 }
