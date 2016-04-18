@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -44,7 +45,13 @@ public class SplashActivity extends Activity {
         tvverson.setText(AppInfoUtils.getVersionName(this));
         //初始化logger
         Logger.init("splash");
-        checkVersion();
+        //根据公共参数判断是否需要自动更新
+        SharedPreferences sf = getSharedPreferences("config", MODE_PRIVATE);
+        if (sf.getBoolean("update",false)){
+            checkVersion();
+        }else{
+            IntentUtils.startActivity(SplashActivity.this,HomeActivity.class,2000);
+        }
     }
 
     /**
