@@ -68,6 +68,7 @@ public class HomeActivity extends Activity {
 
         });
     }
+
     /**
      * 输入密码对话框
      */
@@ -93,8 +94,15 @@ public class HomeActivity extends Activity {
                 } else if (!pd.equals(password)) {
                     ToastUtils.show(HomeActivity.this, "密码错误");
                 } else {
-                    ToastUtils.show(HomeActivity.this, "密码正确,进入手机防盗界面");
+
                     dialog.dismiss();
+                    boolean finish = config.getBoolean("finishsetup", false);
+                    if (finish) {
+//完成设置进入手机防盗
+                    } else {
+                        //第一次进入设置向导
+                        IntentUtils.startActivity(HomeActivity.this,Setup1Activity.class);
+                    }
                 }
             }
         });
@@ -132,8 +140,9 @@ public class HomeActivity extends Activity {
                     SharedPreferences.Editor edit = config.edit();
                     edit.putString("password", pd);
                     edit.commit();
-                    ToastUtils.show(HomeActivity.this, "设置成功,进入手机防盗界面");
+                    ToastUtils.show(HomeActivity.this, "设置成功");
                     dialog.dismiss();
+                    showInputPassWordDialog(pd);
                 }
             }
         });
