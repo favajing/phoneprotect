@@ -50,7 +50,7 @@ public class SplashActivity extends Activity {
         if (sf.getBoolean("update",false)){
             checkVersion();
         }else{
-            IntentUtils.startActivity(SplashActivity.this,HomeActivity.class,2000);
+            IntentUtils.startActivityAndFinish(SplashActivity.this,HomeActivity.class,2000);
         }
     }
 
@@ -117,21 +117,21 @@ public class SplashActivity extends Activity {
                                 });
                             } else {
                                 //无新版本,延迟2秒后进入主界面
-                                IntentUtils.startActivity(SplashActivity.this, HomeActivity.class, 2000);
+                                IntentUtils.startActivityAndFinish(SplashActivity.this, HomeActivity.class, 2000);
                             }
                         }
                     }
                 } catch (MalformedURLException e) {
                     ToastUtils.show(SplashActivity.this, "配置错误");
-                    IntentUtils.startActivity(SplashActivity.this, HomeActivity.class, 1000);
+                    IntentUtils.startActivityAndFinish(SplashActivity.this, HomeActivity.class, 1000);
                     e.printStackTrace();
                 } catch (JSONException e) {
                     ToastUtils.show(SplashActivity.this, "解析错误");
-                    IntentUtils.startActivity(SplashActivity.this, HomeActivity.class, 1000);
+                    IntentUtils.startActivityAndFinish(SplashActivity.this, HomeActivity.class, 1000);
                     e.printStackTrace();
                 } catch (IOException e) {
                     ToastUtils.show(SplashActivity.this, "网络错误");
-                    IntentUtils.startActivity(SplashActivity.this, HomeActivity.class, 1000);
+                    IntentUtils.startActivityAndFinish(SplashActivity.this, HomeActivity.class, 1000);
                     e.printStackTrace();
                 }
                 super.run();

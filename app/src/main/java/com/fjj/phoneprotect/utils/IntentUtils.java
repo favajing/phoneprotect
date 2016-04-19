@@ -30,6 +30,26 @@ public class IntentUtils {
         activity.startActivity(intent);
         activity.finish();
     }
+    /**
+     * 开启新界面,同时关闭旧的
+     *
+     * @param activity
+     * @param cls
+     */
+    public static void startActivityAndFinish(final Activity activity, final Class<?> cls, final long time) {
+        new Thread() {
+            public void run() {
+                try {
+                    Thread.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(activity.getApplicationContext(), cls);
+                activity.startActivity(intent);
+                activity.finish();
+            }
+        }.start();
+    }
 
     /**
      * 延迟开启新界面
