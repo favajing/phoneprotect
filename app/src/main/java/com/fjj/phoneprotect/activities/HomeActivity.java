@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fjj.phoneprotect.LostFindActivity;
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.ui.SettingCheckedView;
 import com.fjj.phoneprotect.utils.IntentUtils;
@@ -99,6 +100,7 @@ public class HomeActivity extends Activity {
                     boolean finish = config.getBoolean("finishsetup", false);
                     if (finish) {
 //完成设置进入手机防盗
+                        IntentUtils.startActivity(HomeActivity.this, LostFindActivity.class);
                     } else {
                         //第一次进入设置向导
                         IntentUtils.startActivity(HomeActivity.this,Setup1Activity.class);

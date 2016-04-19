@@ -21,7 +21,11 @@
         </activity>
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.SettingActivity" />
-        <activity android:name=".activities.Setup1Activity"></activity>
+        <activity android:name=".activities.Setup1Activity" />
+        <activity android:name=".activities.Setup2Activity" />
+        <activity android:name=".activities.Setup3Activity" />
+        <activity android:name=".activities.Setup4Activity" />
+        <activity android:name=".LostFindActivity"></activity>
     </application>
 
 </manifest>

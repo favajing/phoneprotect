@@ -30,5 +30,27 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <style name="safe_button_next">
+        <item name="android:onClick">next</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:background">@drawable/mybutton</item>
+        <item name="android:drawableRight">@android:drawable/ic_media_next</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:text">下一步</item>
+    </style>
+    <style name="safe_button_prev">
+        <item name="android:onClick">prev</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:background">@drawable/mybutton</item>
+        <item name="android:drawableRight">@android:drawable/ic_media_next</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:text">上一步</item>
+    </style>
     <!--手机防盗样式-->
 </resources>

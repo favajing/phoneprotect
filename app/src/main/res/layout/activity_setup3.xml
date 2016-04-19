@@ -8,22 +8,19 @@
 
     <TextView
         style="@style/safe_text_title"
-        android:text="1.欢迎使用手机防盗" />
+        android:text="3.设置安全号码" />
     <TextView
         style="@style/safe_text_content"
-        android:text="您的手机防盗卫士:"></TextView>
-    <TextView
-        style="@style/safe_text_list"
-        android:text="SIM卡变更报警"></TextView>
-    <TextView
-        style="@style/safe_text_list"
-        android:text="GPS追踪"></TextView>
-    <TextView
-        style="@style/safe_text_list"
-        android:text="远程销毁数据"></TextView>
-    <TextView
-        style="@style/safe_text_list"
-        android:text="远程锁屏"></TextView>
+        android:text="SIM变更后报警短信会发送给安全号码:"></TextView>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入手机号码"/>
+<Button
+    android:background="@drawable/mybutton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="选中联系人"></Button>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,29 +29,31 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@android:drawable/presence_online"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/presence_invisible"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/presence_invisible"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/presence_invisible"/>
     </LinearLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<ImageView
-    android:layout_centerInParent="true"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@android:drawable/sym_def_app_icon"></ImageView>
-    <Button
-        style="@style/safe_button_next"></Button>
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/sym_def_app_icon"></ImageView>
+        <Button
+            style="@style/safe_button_next"></Button>
+        <Button
+            style="@style/safe_button_prev"></Button>
+    </RelativeLayout>
 </LinearLayout>

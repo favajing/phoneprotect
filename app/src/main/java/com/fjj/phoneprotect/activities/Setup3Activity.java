@@ -8,21 +8,21 @@ import android.view.View;
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.utils.IntentUtils;
 
-public class Setup1Activity extends SetupBaseActivity {
+public class Setup3Activity extends SetupBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setup1);
+        setContentView(R.layout.activity_setup3);
     }
 
     @Override
     public void shownext() {
-        IntentUtils.startActivityAndFinish(Setup1Activity.this,Setup2Activity.class);
+        IntentUtils.startActivityAndFinish(Setup3Activity.this, Setup4Activity.class);
     }
 
     @Override
     public void showprev() {
-
+        IntentUtils.startActivityAndFinish(Setup3Activity.this,Setup2Activity.class);
     }
 }
