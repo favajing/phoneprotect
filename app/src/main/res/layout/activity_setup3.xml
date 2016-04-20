@@ -13,10 +13,13 @@
         style="@style/safe_text_content"
         android:text="SIM变更后报警短信会发送给安全号码:"></TextView>
     <EditText
+        android:id="@+id/et_setup3_phone"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入手机号码"/>
 <Button
+    android:onClick="findContacts"
     android:background="@drawable/mybutton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

@@ -15,9 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fjj.phoneprotect.LostFindActivity;
 import com.fjj.phoneprotect.R;
-import com.fjj.phoneprotect.ui.SettingCheckedView;
 import com.fjj.phoneprotect.utils.IntentUtils;
 import com.fjj.phoneprotect.utils.ToastUtils;
 

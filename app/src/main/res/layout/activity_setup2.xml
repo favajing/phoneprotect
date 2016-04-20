@@ -18,6 +18,7 @@
         android:text="下次重启手机如果SIM卡变化就会发送报警短信"></TextView>
 
     <com.fjj.phoneprotect.ui.SettingCheckedView
+        android:id="@+id/sck_setup2_bind"
         fjj:bigtitle="点击绑定SIM卡"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>

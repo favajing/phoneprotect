@@ -4,30 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.fjj.phoneprotect.LostFindActivity">
+    tools:context=".activities.LostFindActivity">
 <TextView
     style="@style/safe_text_title"
    android:text="手机防盗"/>
     <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="40dp">
         <TextView
             android:textSize="14dp"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="安全号码"/>
         <TextView
-            android:layout_marginTop="10dp"
+            android:id="@+id/tv_lost_phone"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XXXXX"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="防盗保护是否开启"/>
+        <CheckBox
+            android:id="@+id/tv_lost_safestate"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           />
+    </RelativeLayout>
     <TextView
+        android:height="40dp"
+        android:gravity="center_vertical"
         android:onClick="xiangdao"
         android:clickable="true"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="重新进入设置向导"></TextView>
 </LinearLayout>

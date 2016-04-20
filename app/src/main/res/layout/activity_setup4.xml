@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fjj="http://schemas.android.com/apk/res/com.fjj.phoneprotect"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,20 +10,11 @@
     <TextView
         style="@style/safe_text_title"
         android:text="4.恭喜您设置完成" />
-    <LinearLayout
+    <com.fjj.phoneprotect.ui.SettingCheckedView
+        android:id="@+id/sck_setup4_safebtn"
+        fjj:bigtitle="防盗保护是否开启"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
-        <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="您没有开启防盗保护"></TextView>
-    </LinearLayout>
+        android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
