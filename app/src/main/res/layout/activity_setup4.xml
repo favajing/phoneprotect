@@ -15,6 +15,12 @@
         fjj:bigtitle="防盗保护是否开启"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
+   <Button
+       android:onClick="setadmin"
+       android:background="@drawable/mybutton"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="设置管理员模式"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,10 +1,14 @@
 package com.fjj.phoneprotect.activities;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
 import com.fjj.phoneprotect.R;
+import com.fjj.phoneprotect.receiver.MyAdmin;
 import com.fjj.phoneprotect.ui.SettingCheckedView;
 import com.fjj.phoneprotect.utils.IntentUtils;
 
@@ -48,5 +52,16 @@ public class Setup4Activity extends SetupBaseActivity {
     @Override
     public void showprev() {
         IntentUtils.startActivityAndFinish(Setup4Activity.this,Setup3Activity.class);
+    }
+
+    public void setadmin(View view) {
+        //一建锁屏，底层是广播，开启广播--意图，必须先激活权限
+        Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+        ComponentName who = new ComponentName(this, MyAdmin.class);
+        // 把要激活的组件名告诉系统
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, who);
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                "要求所有的员工都开启这个管理员权限,如果不开启,扣200块钱,赶紧开启吧,开启送大礼包");
+        startActivity(intent);
     }
 }

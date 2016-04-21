@@ -1,12 +1,15 @@
 package com.fjj.phoneprotect.receiver;
 
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.fjj.phoneprotect.R;
 
@@ -40,6 +43,16 @@ public class SmsReceiver extends BroadcastReceiver {
                 abortBroadcast();
             }else if("#*lock*#".equals(body)){
                 Log.i(TAG,"远程锁屏");
+                // 先判断应用程序是否已经被激活
+                DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(context.DEVICE_POLICY_SERVICE);
+                // 声明出来设备管理器广播接受者的组件名
+                ComponentName who = new ComponentName(context, MyAdmin.class);
+                if (dpm.isAdminActive(who)) {
+                    dpm.wipeData(0);//删除数据
+                    dpm.resetPassword("1234", 0);//重新设置密码为123
+                    dpm.lockNow();
+                    //dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE); 清除数据
+                }
                 abortBroadcast();
             }
         }
