@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.utils.IntentUtils;
+import com.fjj.phoneprotect.utils.Md5Utils;
 import com.fjj.phoneprotect.utils.ToastUtils;
 
 public class HomeActivity extends Activity {
@@ -90,7 +91,7 @@ public class HomeActivity extends Activity {
                 String pd = pwd.getText().toString();
                 if (TextUtils.isEmpty(pd)) {
                     ToastUtils.show(HomeActivity.this, "密码不能为空");
-                } else if (!pd.equals(password)) {
+                } else if (!Md5Utils.encode(pd).equals(password)) {
                     ToastUtils.show(HomeActivity.this, "密码错误");
                 } else {
 
@@ -138,11 +139,11 @@ public class HomeActivity extends Activity {
                     ToastUtils.show(HomeActivity.this, "两次密码不一致");
                 } else {
                     SharedPreferences.Editor edit = config.edit();
-                    edit.putString("password", pd);
+                    edit.putString("password", Md5Utils.encode(pd));
                     edit.commit();
                     ToastUtils.show(HomeActivity.this, "设置成功");
                     dialog.dismiss();
-                    showInputPassWordDialog(pd);
+                    showInputPassWordDialog(Md5Utils.encode(pd));
                 }
             }
         });

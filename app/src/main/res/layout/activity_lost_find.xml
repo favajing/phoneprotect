@@ -50,4 +50,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="重新进入设置向导"></TextView>
+    <TextView
+        android:background="#33000000"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="功能简介:"></TextView>
+    <TextView
+        android:drawableLeft="@android:drawable/btn_star_big_on"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="GPS追踪: #*location*#"/>
+    <TextView
+        android:drawableLeft="@android:drawable/btn_star_big_on"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="播放报警音乐: #*alarm*#"/>
+    <TextView
+        android:drawableLeft="@android:drawable/btn_star_big_on"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="远程删除数据: #*delete*#"/>
+    <TextView
+        android:drawableLeft="@android:drawable/btn_star_big_on"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="远程锁屏: #*lock*#"/>
 </LinearLayout>
