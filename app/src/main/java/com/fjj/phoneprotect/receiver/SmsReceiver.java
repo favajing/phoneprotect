@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.fjj.phoneprotect.R;
+import com.fjj.phoneprotect.services.GPSService;
 
 public class SmsReceiver extends BroadcastReceiver {
     private static final String TAG = "SmsReceiver";
@@ -27,6 +28,10 @@ public class SmsReceiver extends BroadcastReceiver {
             String body = smsMessage.getMessageBody();
             if("#*location*#".equals(body)){
                 Log.i(TAG, "返回手机的位置信息");
+                //获取用户的位置信息.
+                //后台获取.
+                Intent service = new Intent(context,GPSService.class);
+                context.startService(service);
                 abortBroadcast();
             }else if("#*alarm*#".equals(body)){
                 Log.i(TAG,"播放报警音乐");
