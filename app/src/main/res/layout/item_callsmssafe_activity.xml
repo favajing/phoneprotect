@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
+    <TextView
+        android:id="@+id/tv_itemcass_phone"
+        android:textSize="25dp"
+        android:textColor="#020202"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15240399999"/>
+    <TextView
+        android:id="@+id/tv_itemcass_mode"
+        android:layout_below="@+id/tv_itemcass_phone"
+        android:textSize="20dp"
+        android:textColor="#fc8907"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点后拦截"/>
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_menu_delete"/>
+</RelativeLayout>

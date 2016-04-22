@@ -59,6 +59,9 @@ public class HomeActivity extends Activity {
                             showInputPassWordDialog(password);
                         }
                         break;
+                    case 1:
+                        IntentUtils.startActivity(HomeActivity.this, CallSmsSafeActivity.class);
+                        break;
                     case 8:
                         IntentUtils.startActivity(HomeActivity.this, SettingActivity.class);
                         break;
