@@ -19,6 +19,8 @@
         android:layout_height="wrap_content"
         android:text="点后拦截"/>
     <ImageView
+        android:clickable="true"
+        android:id="@+id/iv_itemcass_del"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"

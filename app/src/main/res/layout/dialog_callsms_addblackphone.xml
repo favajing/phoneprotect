@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+<TextView
+    style="@style/safe_text_title"
+    android:text="添加黑名单"></TextView>
+    <EditText
+        android:id="@+id/et_dialogcall_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <RadioGroup
+        android:id="@+id/rg_blackgroup"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rb_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="手机"/>
+        <RadioButton
+            android:id="@+id/rb_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="短信"/>
+        <RadioButton
+            android:id="@+id/rb_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部"/>
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/bt_dialoghome_yes"
+            android:background="@drawable/mybutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"></Button>
+        <Button
+            android:id="@+id/bt_dialoghome_no"
+            android:background="@drawable/mybutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"></Button>
+    </LinearLayout>
+</LinearLayout>

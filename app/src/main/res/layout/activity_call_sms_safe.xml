@@ -12,6 +12,7 @@
             style="@style/safe_text_title"
             android:text="手机黑名单"/>
 <Button
+    android:onClick="add"
     android:textSize="15dp"
     android:background="@drawable/mybutton"
     android:layout_alignParentRight="true"
