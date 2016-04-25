@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -26,21 +27,38 @@ import java.util.List;
 public class CallSmsSafeActivity extends Activity {
 
     ListView phones;
+    LinearLayout loading;
     private MyBaseAdapter adapter;
     BlackNumberDao dao;
-    private List<BlackNumberInfo> info;
+    protected List<BlackNumberInfo> info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_sms_safe);
         phones = (ListView) findViewById(R.id.lv_callsms_phones);
+        loading = (LinearLayout) findViewById(R.id.ll_callsms_loading);
         //获取数据库黑名单
-        BlackNumberDao dao = new BlackNumberDao(this);
-        info = dao.findAll();
-        //绑定到listview
-        adapter = new MyBaseAdapter();
-        phones.setAdapter(adapter);
+        final BlackNumberDao dao = new BlackNumberDao(this);
+        //优化listview加载数据方式
+        new Thread(){
+            @Override
+            public void run() {
+                info = dao.findAll();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //绑定到listview
+                        adapter = new MyBaseAdapter();
+                        phones.setAdapter(adapter);
+                        loading.setVisibility(View.INVISIBLE);
+                    }
+                });
+                super.run();
+            }
+        }.start();
+
+
     }
     //添加黑名单
     public void add(View view) {

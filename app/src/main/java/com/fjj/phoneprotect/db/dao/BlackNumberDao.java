@@ -83,6 +83,11 @@ public class BlackNumberDao {
             info.setPhone(phone);
             info.setMode(mode);
             infos.add(info);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         cursor.close();
         db.close();

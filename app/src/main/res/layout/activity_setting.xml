@@ -14,30 +14,6 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:text="设置中心"/>
-<!--    <RelativeLayout
-        android:background="@drawable/mybackground"
-        android:id="@+id/rl_setting_updateclick"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="是否自动更新"></TextView>
-        <CheckBox
-            android:id="@+id/cb_setting_updatestate"
-            android:clickable="false"
-            android:focusableInTouchMode="false"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            ></CheckBox>
-    </RelativeLayout>-->
     <View
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -47,6 +23,11 @@
     <com.fjj.phoneprotect.ui.SettingCheckedView
         android:id="@+id/scv_update"
         fjj:bigtitle="是否自动更新(自定义)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
+    <com.fjj.phoneprotect.ui.SettingCheckedView
+        android:id="@+id/scv_blacknumber"
+        fjj:bigtitle="是否开启黑名单拦截"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
 </LinearLayout>

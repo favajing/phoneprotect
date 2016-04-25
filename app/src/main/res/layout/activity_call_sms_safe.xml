@@ -21,8 +21,31 @@
     android:layout_height="50dp"
     android:text="添加"></Button>
     </RelativeLayout>
-    <ListView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lv_callsms_phones"></ListView>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_callsms_phones"></ListView>
+        <LinearLayout
+            android:id="@+id/ll_callsms_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+            <ProgressBar
+                android:indeterminateDrawable="@drawable/myprogressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="拼命加载中..."/>
+        </LinearLayout>
+
+    </RelativeLayout>
 </LinearLayout>
