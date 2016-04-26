@@ -110,4 +110,48 @@ public class BlackNumberDao {
         db.close();
         return mode;
     }
+
+    /**
+     * 分页显示黑名单号码信息
+     * @param pagenumber 页码号
+     * @return
+     */
+    public List<BlackNumberInfo> findPage(int pagenumber){
+        SQLiteDatabase  db = dbhelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select _id, phone,mode from blacknumberinfo order by _id desc limit ? offset ?", new String[]{
+                String.valueOf(20),String.valueOf(20*pagenumber)
+        });
+        List<BlackNumberInfo> infos = new ArrayList<BlackNumberInfo>();
+        while(cursor.moveToNext()){
+            BlackNumberInfo info = new BlackNumberInfo();
+            String phone = cursor.getString(cursor.getColumnIndex("phone"));
+            String mode = cursor.getString(cursor.getColumnIndex("mode"));
+            info.setPhone(phone);
+            info.setMode(mode);
+            infos.add(info);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
+        db.close();
+        return infos;
+    }
+
+
+    /**
+     * 获取黑名单号码的条目信息
+     * @return 总个数
+     */
+    public int getTotalCount(){
+        SQLiteDatabase  db = dbhelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from blacknumberinfo",null);
+        cursor.moveToNext();
+        int totalcount = cursor.getInt(0);
+        cursor.close();
+        db.close();
+        return totalcount;
+    }
 }

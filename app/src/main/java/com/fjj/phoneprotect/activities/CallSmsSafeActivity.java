@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ import com.fjj.phoneprotect.db.BlackNumberDBOpenHelper;
 import com.fjj.phoneprotect.db.dao.BlackNumberDao;
 import com.fjj.phoneprotect.domain.BlackNumberInfo;
 import com.fjj.phoneprotect.utils.ToastUtils;
+import com.lidroid.xutils.view.annotation.event.OnScrollStateChanged;
 
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class CallSmsSafeActivity extends Activity {
     private MyBaseAdapter adapter;
     BlackNumberDao dao;
     protected List<BlackNumberInfo> info;
+    int pagenumber = 0;
+    private double totalCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +45,62 @@ public class CallSmsSafeActivity extends Activity {
         loading = (LinearLayout) findViewById(R.id.ll_callsms_loading);
         //获取数据库黑名单
         final BlackNumberDao dao = new BlackNumberDao(this);
+        totalCount = dao.getTotalCount();
+
+
+        phones.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                switch (scrollState) {
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:// 空闲状态, listview停止在界面上
+                        // 判断listview界面上的最后一个用户可见的条目的信息
+                        // 得到listview界面最后一个可见条目在集合里面的位置,位置id是从0开始的.
+                        int position = phones.getLastVisiblePosition();
+                        int size = info.size();// 集合的总大小 从1开始的.
+                        if (position == (size - 1)) {
+                            System.out.println("用户把listview移动到了最下面,加载更多数据");
+                            pagenumber ++;
+                            if(pagenumber * 20>= totalCount){
+                                //说明数据已经加载到最后了.
+                                ToastUtils.show(CallSmsSafeActivity.this, "没有更多数据了");
+                                return;
+                            }
+                            // 查询数据库把新的数据获取出来.
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    info.addAll(dao.findPage(pagenumber));
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //绑定到listview
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                    });
+                                    super.run();
+                                }
+                            }.start();
+                        }
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL: // 触摸滚动
+
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING: // 滑 翔 ,惯性滚动
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
         //优化listview加载数据方式
         new Thread(){
             @Override
             public void run() {
-                info = dao.findAll();
+                info = dao.findPage(pagenumber);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
