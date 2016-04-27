@@ -1,5 +1,6 @@
 package com.fjj.phoneprotect.activities;
 
+import android.app.Activity;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.db.dao.NumberAddressDao;
 import com.fjj.phoneprotect.utils.ToastUtils;
 
-public class SearchNumberAddressActivity extends AppCompatActivity {
+public class SearchNumberAddressActivity extends Activity {
 
     TextView tvresult;
     EditText etphone;
