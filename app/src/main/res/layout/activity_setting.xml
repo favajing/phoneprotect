@@ -30,4 +30,9 @@
         fjj:bigtitle="是否开启黑名单拦截"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
+    <com.fjj.phoneprotect.ui.SettingCheckedView
+        android:id="@+id/scv_numberaddress"
+        fjj:bigtitle="是否开启归属地查询"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
 </LinearLayout>

@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -84,6 +85,11 @@
 
         <service
             android:name=".services.CallSmsSafeService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".services.NumberAddressService"
             android:enabled="true"
             android:exported="true" />
 

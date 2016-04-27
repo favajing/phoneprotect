@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.services.CallSmsSafeService;
+import com.fjj.phoneprotect.services.NumberAddressService;
 import com.fjj.phoneprotect.ui.SettingCheckedView;
 import com.fjj.phoneprotect.utils.ServiceStautsUtils;
 
@@ -21,6 +22,7 @@ public class SettingActivity extends Activity {
 //    CheckBox cbstate;
     SettingCheckedView scvupdate;
     SettingCheckedView scvblacknumber;
+    SettingCheckedView scvnumberaddress;
     private SharedPreferences sf;
 
     @Override
@@ -29,6 +31,7 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
         scvblacknumber = (SettingCheckedView) findViewById(R.id.scv_blacknumber);
         scvupdate = (SettingCheckedView) findViewById(R.id.scv_update);
+        scvnumberaddress = (SettingCheckedView) findViewById(R.id.scv_numberaddress);
         //获取共享参数
         sf = getSharedPreferences("config", BIND_AUTO_CREATE);
         //读取配置设置checkbox状态
@@ -51,8 +54,6 @@ public class SettingActivity extends Activity {
             }
         });
 
-
-
         scvblacknumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +67,20 @@ public class SettingActivity extends Activity {
                 }
             }
         });
+
+        scvnumberaddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, NumberAddressService.class);
+                if (scvnumberaddress.isChecked()) {
+                    stopService(intent);
+                    scvnumberaddress.setChecked(false);
+                } else {
+                    startService(intent);
+                    scvnumberaddress.setChecked(true);
+                }
+            }
+        });
     }
 
     @Override
@@ -73,6 +88,9 @@ public class SettingActivity extends Activity {
         //读取黑名单开启状态
         boolean blackstate = ServiceStautsUtils.isServiceRunning(this,"com.fjj.phoneprotect.services.CallSmsSafeService");
         scvblacknumber.setChecked(blackstate);
+
+        boolean numberaddressstate = ServiceStautsUtils.isServiceRunning(this,"com.fjj.phoneprotect.services.NumberAddressService");
+        scvnumberaddress.setChecked(numberaddressstate);
         super.onStart();
     }
 }
