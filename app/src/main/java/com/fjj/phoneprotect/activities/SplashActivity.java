@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.InputFilter;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.fjj.phoneprotect.R;
@@ -25,14 +27,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class SplashActivity extends Activity {
 
+    private static final String TAG = "SplashActivity";
     TextView tvverson;
 
     @Override
@@ -51,6 +56,29 @@ public class SplashActivity extends Activity {
             checkVersion();
         }else{
             IntentUtils.startActivityAndFinish(SplashActivity.this,HomeActivity.class,2000);
+        }
+
+        //导入数据库文件到手机
+        downloadDB();
+
+    }
+
+    private void downloadDB() {
+        File file = new File(getFilesDir(),"address.db");
+        if (file.exists()){
+            Log.i(TAG, "数据库文件已保存");
+        }else{
+            try {
+                InputStream dbfile = getAssets().open("address.db");
+                byte[] arr = new byte[1024];
+                int length = 0;
+                FileOutputStream outputStream = new FileOutputStream(file);
+                while((length = dbfile.read(arr)) != -1){
+                    outputStream.write(arr,0,length);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
