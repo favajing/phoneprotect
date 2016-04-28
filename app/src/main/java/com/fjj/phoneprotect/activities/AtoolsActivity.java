@@ -19,4 +19,8 @@ public class AtoolsActivity extends Activity {
     public void search(View view) {
         IntentUtils.startActivity(this, SearchNumberAddressActivity.class);
     }
+
+    public void commonphone(View view) {
+        IntentUtils.startActivity(this, CommonNumberActivity.class);
+    }
 }

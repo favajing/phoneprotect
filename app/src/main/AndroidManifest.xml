@@ -17,9 +17,9 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"></uses-permission>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -88,14 +88,14 @@
             android:name=".services.CallSmsSafeService"
             android:enabled="true"
             android:exported="true" />
-
         <service
             android:name=".services.NumberAddressService"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".activities.AtoolsActivity" />
-        <activity android:name=".activities.SearchNumberAddressActivity"></activity>
+        <activity android:name=".activities.SearchNumberAddressActivity" />
+        <activity android:name=".activities.CommonNumberActivity"></activity>
     </application>
 
 </manifest>
