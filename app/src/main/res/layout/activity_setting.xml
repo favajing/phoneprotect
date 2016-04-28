@@ -35,4 +35,10 @@
         fjj:bigtitle="是否开启归属地查询"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
+<com.fjj.phoneprotect.ui.SettingChangeView
+    android:id="@+id/sc_style"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    fjj:chtitle="归属地提示框风格2"
+    fjj:chdesc="天空灰"></com.fjj.phoneprotect.ui.SettingChangeView>
 </LinearLayout>
