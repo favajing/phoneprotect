@@ -1,6 +1,9 @@
 package com.fjj.phoneprotect.activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,14 +13,21 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.fjj.phoneprotect.R;
+import com.fjj.phoneprotect.db.dao.CommonNumberDao;
+
+import java.util.ArrayList;
 
 public class CommonNumberActivity extends Activity {
 
     ExpandableListView elvphone;
+    private ArrayList<CommonNumberDao.NumberType> commonNum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common_number);
+        CommonNumberDao dao = new CommonNumberDao();
+        commonNum = dao.getCommonNum();
         elvphone = (ExpandableListView) findViewById(R.id.elv_commonnumber_phone);
         elvphone.setAdapter(new BaseExpandableListAdapter() {
             /**
@@ -26,7 +36,7 @@ public class CommonNumberActivity extends Activity {
              */
             @Override
             public int getGroupCount() {
-                return 8;
+                return commonNum.size();
             }
             /**
              * 设置每组有多少孩子
@@ -35,26 +45,7 @@ public class CommonNumberActivity extends Activity {
              */
             @Override
             public int getChildrenCount(int groupPosition) {
-                switch (groupPosition) {
-                    case 0:
-                        return 1;
-                    case 1:
-                        return 2;
-                    case 2:
-                        return 3;
-                    case 3:
-                        return 4;
-                    case 4:
-                        return 5;
-                    case 5:
-                        return 6;
-                    case 6:
-                        return 7;
-                    case 7:
-                        return 8;
-                    default:
-                        return 0;
-                }
+                return commonNum.get(groupPosition).getChildnumbers().size();
             }
 
             /**
@@ -67,8 +58,14 @@ public class CommonNumberActivity extends Activity {
              */
             @Override
             public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-                TextView textView = new TextView(getApplicationContext());
-                textView.setText("我属于" + groupPosition + "组的控件");
+
+                TextView textView = (TextView) convertView;
+                if (textView == null){
+                    textView = new TextView(getApplicationContext());
+                }
+                textView.setTextColor(Color.RED);
+                textView.setTextSize(20);
+                textView.setText("        " + commonNum.get(groupPosition).getName());
                 return textView;
             }
 
@@ -82,9 +79,25 @@ public class CommonNumberActivity extends Activity {
              * @return
              */
             @Override
-            public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-                TextView textView = new TextView(getApplicationContext());
-                textView.setText("我属于" + groupPosition + "组的控件的" + childPosition + "个孩子");
+            public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+                TextView textView = (TextView) convertView;
+                if (textView == null){
+                    textView = new TextView(getApplicationContext());
+                }
+                textView.setTextSize(20);
+                textView.setTextColor(Color.RED);
+                final ArrayList<CommonNumberDao.Number> childnumbers = commonNum.get(groupPosition).getChildnumbers();
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //定义意图,设置动作,设置数据,开始意图
+                        Intent intent = new Intent();
+                        intent.setData(Uri.parse("tel://" + childnumbers.get(childPosition).getNum()));//URI 统一资源标识符(范围更加广泛)
+                        intent.setAction(Intent.ACTION_CALL);
+                        startActivity(intent);
+                    }
+                });
+                textView.setText(childnumbers.get(childPosition).getName() + " : " + childnumbers.get(childPosition).getNum());
                 return textView;
             }
 
@@ -113,9 +126,10 @@ public class CommonNumberActivity extends Activity {
                 return false;
             }
 
+            //子类是否可点击
             @Override
             public boolean isChildSelectable(int groupPosition, int childPosition) {
-                return false;
+                return true;
             }
         });
     }

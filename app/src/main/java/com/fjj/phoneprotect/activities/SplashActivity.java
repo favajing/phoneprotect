@@ -59,17 +59,18 @@ public class SplashActivity extends Activity {
         }
 
         //导入数据库文件到手机
-        downloadDB();
+        downloadDB("address.db");
+        downloadDB("commonnum.db");
 
     }
 
-    private void downloadDB() {
-        File file = new File(getFilesDir(),"address.db");
+    private void downloadDB(String dbname) {
+        File file = new File(getFilesDir(),dbname);
         if (file.exists()){
-            Log.i(TAG, "数据库文件已保存");
+            Log.i(TAG, dbname+"数据库文件已保存");
         }else{
             try {
-                InputStream dbfile = getAssets().open("address.db");
+                InputStream dbfile = getAssets().open(dbname);
                 byte[] arr = new byte[1024];
                 int length = 0;
                 FileOutputStream outputStream = new FileOutputStream(file);

@@ -20,4 +20,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="常用号码查询"/>
+    <Button
+        android:onClick="backupsms"
+        android:background="@drawable/mybutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="备份短信"/>
+    <Button
+        android:onClick="returnsms"
+        android:background="@drawable/mybutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="还原短信"/>
 </LinearLayout>
