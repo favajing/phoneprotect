@@ -62,6 +62,9 @@ public class HomeActivity extends Activity {
                     case 1:
                         IntentUtils.startActivity(HomeActivity.this, CallSmsSafeActivity.class);
                         break;
+                    case 2:
+                        IntentUtils.startActivity(HomeActivity.this, AppManagerActivity.class);
+                        break;
                     case 7:
                         IntentUtils.startActivity(HomeActivity.this, AtoolsActivity.class);
                         break;

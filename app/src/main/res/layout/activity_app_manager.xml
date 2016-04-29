@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.fjj.phoneprotect.activities.AppManagerActivity">
+    <TextView
+        style="@style/safe_text_title"
+        android:text="手机程序管理器"/>
+<LinearLayout
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <TextView
+        android:id="@+id/tv_appmanager_androidunused"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="内存可用:"></TextView>
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:id="@+id/tv_appmanager_sdunused"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SD卡可用:"></TextView>
+</LinearLayout>
+</LinearLayout>

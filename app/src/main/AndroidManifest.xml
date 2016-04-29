@@ -95,7 +95,8 @@
 
         <activity android:name=".activities.AtoolsActivity" />
         <activity android:name=".activities.SearchNumberAddressActivity" />
-        <activity android:name=".activities.CommonNumberActivity"></activity>
+        <activity android:name=".activities.CommonNumberActivity" />
+        <activity android:name=".activities.AppManagerActivity"></activity>
     </application>
 
 </manifest>
