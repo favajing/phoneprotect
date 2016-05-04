@@ -10,6 +10,10 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -216,6 +220,15 @@ public class AppManagerActivity extends Activity {
                                     appInfo = sysappinfos.get(position - userappinfos.size());
                                 }
                                 View view1 = View.inflate(AppManagerActivity.this,R.layout.item_appmanager_popup,null);
+                                //添加动画
+                                AlphaAnimation aa = new AlphaAnimation(0.0f,1.0f);
+                                aa.setDuration(300);
+                                ScaleAnimation sa =new ScaleAnimation(0.5f,1.0f,0.5f,1.0f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.5f);
+                                sa.setDuration(300);
+                                AnimationSet set = new AnimationSet(false);
+                                set.addAnimation(aa);
+                                set.addAnimation(sa);
+                                view1.setAnimation(set);
                                 //保证只有一个悬浮窗体
                                 dismisPopupWindow();
                                 //创建对象
