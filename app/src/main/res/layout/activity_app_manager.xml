@@ -36,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ListView
+            android:fastScrollEnabled="true"
             android:id="@+id/lv_appmanager_applist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
@@ -54,5 +55,13 @@
                 android:layout_height="wrap_content"
                 android:text="拼命加载中..."/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/tv_appmanager_apptype"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:background="#FF888888"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="用户程序:12个"/>
     </FrameLayout>
 </LinearLayout>
