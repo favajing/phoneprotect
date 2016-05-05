@@ -2,11 +2,17 @@ package com.fjj.phoneprotect.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +33,16 @@ import android.widget.TextView;
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.domain.AppInfo;
 import com.fjj.phoneprotect.engine.AppAdmin;
+import com.fjj.phoneprotect.utils.ToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 
-public class AppManagerActivity extends Activity {
+public class AppManagerActivity extends Activity implements View.OnClickListener{
 
+    private static final String TAG = "AppManagerActivity";
     TextView apptype;
     /**
      * 系统可用空间
@@ -55,12 +63,31 @@ public class AppManagerActivity extends Activity {
     private List<AppInfo> appinfos;
     private List<AppInfo> userappinfos;
     private List<AppInfo> sysappinfos;
+    /**
+     * 浮动窗体
+     */
     private PopupWindow popupWindow;
+    /**
+     * 被点击的app信息
+     */
+    private AppInfo appInfo;
+    private BaseAdapter adapter;
+    /**
+     * 卸载广播接受者
+     */
+    private InnerUninstallReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_manager);
+        //注册广播接受者
+        receiver = new InnerUninstallReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addDataScheme("package");
+        registerReceiver(receiver, filter);
+
         apptype = (TextView) findViewById(R.id.tv_appmanager_apptype);
         androidunused = (TextView) findViewById(R.id.tv_appmanager_androidunused);
         sdunused = (TextView) findViewById(R.id.tv_appmanager_sdunused);
@@ -79,7 +106,10 @@ public class AppManagerActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        //注销浮动窗体,防止退出后抛出异常
         dismisPopupWindow();
+        unregisterReceiver(receiver);
+        receiver = null;
         super.onDestroy();
     }
 
@@ -102,7 +132,7 @@ public class AppManagerActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        lvapplist.setAdapter(new BaseAdapter() {
+                        adapter = new BaseAdapter() {
                             @Override
                             public int getCount() {
                                 return userappinfos.size() + sysappinfos.size() + 2;
@@ -176,7 +206,8 @@ public class AppManagerActivity extends Activity {
                             public long getItemId(int position) {
                                 return 0;
                             }
-                        });
+                        };
+                        lvapplist.setAdapter(adapter);
                         llloadding.setVisibility(View.INVISIBLE);
                         //模拟浮动标识符
                         lvapplist.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -213,13 +244,21 @@ public class AppManagerActivity extends Activity {
                                     position -= 2;
                                 }
                                 //判断是用户还是系统程序
-                                AppInfo appInfo;
                                 if (position < userappinfos.size()) {
                                     appInfo = userappinfos.get(position);
                                 } else {
                                     appInfo = sysappinfos.get(position - userappinfos.size());
                                 }
                                 View view1 = View.inflate(AppManagerActivity.this,R.layout.item_appmanager_popup,null);
+                                //获取需要的控件
+                                LinearLayout ll_uninstall = (LinearLayout) view1.findViewById(R.id.ll_uninstall);
+                                ll_uninstall.setOnClickListener(AppManagerActivity.this);
+                                LinearLayout ll_share = (LinearLayout) view1.findViewById(R.id.ll_share);
+                                ll_share.setOnClickListener(AppManagerActivity.this);
+                                LinearLayout ll_start = (LinearLayout) view1.findViewById(R.id.ll_start);
+                                ll_start.setOnClickListener(AppManagerActivity.this);
+                                LinearLayout ll_info = (LinearLayout) view1.findViewById(R.id.ll_info);
+                                ll_info.setOnClickListener(AppManagerActivity.this);
                                 //添加动画
                                 AlphaAnimation aa = new AlphaAnimation(0.0f,1.0f);
                                 aa.setDuration(300);
@@ -237,23 +276,101 @@ public class AppManagerActivity extends Activity {
                                 popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 int[] location = new int[2];
                                 view.getLocationInWindow(location);
-                                popupWindow.showAtLocation(parent, Gravity.LEFT + Gravity.TOP, 60, location[1]);
+                                popupWindow.showAtLocation(parent, Gravity.LEFT + Gravity.TOP, 70, location[1]);
                             }
                         });
                     }
 
                 });
-
                 super.run();
             }
         }.start();
 
     }
 
+    /**
+     * 注销浮动窗体,保证窗体唯一性
+     */
     private void dismisPopupWindow() {
         if (popupWindow != null && popupWindow.isShowing()){
             popupWindow.dismiss();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_info:
+                Log.i(TAG, "信息:" + appInfo.getApppackage());
+                showApplicationInfo();
+                break;
+            case R.id.ll_share:
+                shareAppcation();
+                Log.i(TAG, "分享:" + appInfo.getApppackage());
+                break;
+            case R.id.ll_start:
+                Log.i(TAG, "启动:" + appInfo.getApppackage());
+                startApplication();
+                break;
+            case R.id.ll_uninstall:
+                uninstallApplication();
+                Log.i(TAG, "卸载:" + appInfo.getApppackage());
+                break;
+        }
+        dismisPopupWindow();
+    }
+
+    /**
+     * 打开系统详细信息界面
+     */
+    private void showApplicationInfo() {
+//		  <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />
+//          <category android:name="android.intent.category.DEFAULT" />
+//          <data android:scheme="package" />
+        Intent intent = new Intent();
+        intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.setData(Uri.parse("package:"+appInfo.getApppackage()));
+        startActivity(intent);
+    }
+
+    /**
+     * 卸载应用程序
+     */
+    private void uninstallApplication() {
+        if (appInfo.isuserapp()) {
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.DELETE");
+            intent.addCategory("android.intent.category.DEFAULT");
+            intent.setData(Uri.parse("package:" + appInfo.getApppackage()));
+            startActivity(intent);
+        }else{
+            ToastUtils.show(this, "系统软件需要有root权限后才可以被卸载");
+        }
+    }
+    /**
+     * 启动应用程序
+     */
+    private void startApplication() {
+        PackageManager pm = getPackageManager();
+        Intent intent = pm.getLaunchIntentForPackage(appInfo.getApppackage());
+        if (intent != null) {
+            startActivity(intent);
+        } else {
+            ToastUtils.show(this, "当前应用程序无法启动");
+        }
+    }
+
+    /**
+     * 分享应用程序
+     */
+    private void shareAppcation() {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.SEND");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "推荐给你一款软件:" + appInfo.getAppname() + ",好用的不要不要的呦!");
+        startActivity(intent);
     }
 
 
@@ -262,6 +379,19 @@ public class AppManagerActivity extends Activity {
         public TextView isrow;
         public TextView appsize;
         public ImageView icon;
+    }
+
+    private class InnerUninstallReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            System.out.println("哈哈哈,被卸载了.");
+            if(appInfo.isuserapp()){
+                userappinfos.remove(appInfo);
+            }else{
+                sysappinfos.remove(appInfo);
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
 }
