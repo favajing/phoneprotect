@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_appmanager_loadding"
             android:layout_gravity="center"
             android:gravity="center"
