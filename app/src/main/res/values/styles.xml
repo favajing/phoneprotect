@@ -53,4 +53,8 @@
         <item name="android:text">上一步</item>
     </style>
     <!--手机防盗样式-->
+    <style name="widget_text">
+        <item name="android:textSize">16.0dip</item>
+        <item name="android:textColor">#ff000000</item>
+    </style>
 </resources>
