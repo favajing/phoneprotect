@@ -34,7 +34,8 @@
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <ListView
             android:fastScrollEnabled="true"
             android:id="@+id/lv_appmanager_applist"
@@ -57,7 +58,7 @@
                 android:text="拼命加载中..."/>
         </LinearLayout>
         <TextView
-            android:id="@+id/tv_appmanager_apptype"
+            android:id="@+id/tv_taskmanager_tasktype"
             android:textColor="#ffffff"
             android:textSize="20dp"
             android:background="#FF888888"
@@ -65,4 +66,39 @@
             android:layout_height="wrap_content"
             android:text="用户进程:12个"/>
     </FrameLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <Button
+            android:onClick="selectall"
+            android:background="@drawable/mybutton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="全选"></Button>
+        <Button
+            android:onClick="unselect"
+            android:background="@drawable/mybutton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="反选"></Button>
+        <Button
+            android:onClick="clear"
+            android:background="@drawable/mybutton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="清理"></Button>
+        <Button
+            android:onClick="setting"
+            android:background="@drawable/mybutton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="设置"></Button>
+    </LinearLayout>
+
 </LinearLayout>

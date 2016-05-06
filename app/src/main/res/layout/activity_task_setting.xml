@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fjj="http://schemas.android.com/apk/res/com.fjj.phoneprotect"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.fjj.phoneprotect.activities.TaskSettingActivity">
+<TextView
+   style="@style/safe_text_title"
+    android:text="进程管理设置"></TextView>
+    <com.fjj.phoneprotect.ui.SettingCheckedView
+        android:id="@+id/scv_showsysprc"
+        fjj:bigtitle="是否显示系统进程"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
+    <com.fjj.phoneprotect.ui.SettingCheckedView
+        android:id="@+id/scv_autokillprc"
+        fjj:bigtitle="锁屏自动清理进程"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.fjj.phoneprotect.ui.SettingCheckedView>
+</LinearLayout>

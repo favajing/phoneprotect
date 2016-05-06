@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 
+import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.domain.TaskInfo;
 
 import java.util.ArrayList;
@@ -46,8 +47,8 @@ public class TaskInfoProvider {
                     info.setIsuser(true);
                 }
             } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
                 info.setTaskName(packagename);
+                info.setIcon(context.getResources().getDrawable(R.drawable.callmsgsafe));
             }
             res.add(info);
         }

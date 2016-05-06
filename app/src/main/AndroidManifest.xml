@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application
         android:allowBackup="true"
@@ -98,7 +99,13 @@
         <activity android:name=".activities.SearchNumberAddressActivity" />
         <activity android:name=".activities.CommonNumberActivity" />
         <activity android:name=".activities.AppManagerActivity" />
-        <activity android:name=".activities.TaskManagerActivity"></activity>
+        <activity android:name=".activities.TaskManagerActivity" />
+        <activity android:name=".activities.TaskSettingActivity" />
+
+        <service
+            android:name=".services.AutoKillProcessService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

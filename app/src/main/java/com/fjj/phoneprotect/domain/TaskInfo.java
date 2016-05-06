@@ -11,6 +11,15 @@ public class TaskInfo {
     private Drawable icon;
     private long memsize;
     private boolean isuser;
+    private boolean ischecked;
+
+    public boolean ischecked() {
+        return ischecked;
+    }
+
+    public void setIschecked(boolean ischecked) {
+        this.ischecked = ischecked;
+    }
 
     public String getTaskName() {
         return taskName;
