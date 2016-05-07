@@ -70,7 +70,7 @@
         <service
             android:name=".services.UpdateWidgetService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <receiver
             android:name=".receiver.BootReceiver"
@@ -105,8 +105,7 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
-        <!-- 桌面部件接守者 -->
-
+        <!-- 桌面部件接收者 -->
         <receiver
             android:name=".receiver.MyWidget"
             android:enabled="true"
@@ -119,7 +118,14 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/process_widget_provider" />
         </receiver>
-
+        <receiver
+            android:name=".receiver.KillProcessesReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.fjj.phoneprotect.killProcesses"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
