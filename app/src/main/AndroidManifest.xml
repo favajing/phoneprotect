@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fjj.phoneprotect"
-    android:installLocation="preferExternal">
+    package="com.fjj.phoneprotect">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -52,24 +51,22 @@
         <activity android:name=".activities.TaskSettingActivity" />
         <activity android:name=".activities.CallSmsSafeActivity" />
 
-
         <service
-        android:name=".services.GPSService"
-        android:enabled="true"
-        android:exported="true" />
+            android:name=".services.GPSService"
+            android:enabled="true"
+            android:exported="true" />
         <service
-        android:name=".services.CallSmsSafeService"
-        android:enabled="true"
-        android:exported="true" />
+            android:name=".services.CallSmsSafeService"
+            android:enabled="true"
+            android:exported="true" />
         <service
-        android:name=".services.NumberAddressService"
-        android:enabled="true"
-        android:exported="true" />
-
+            android:name=".services.NumberAddressService"
+            android:enabled="true"
+            android:exported="true" />
         <service
-        android:name=".services.AutoKillProcessService"
-        android:enabled="true"
-        android:exported="true" />
+            android:name=".services.AutoKillProcessService"
+            android:enabled="true"
+            android:exported="true" />
 
         <receiver
             android:name=".receiver.BootReceiver"
@@ -104,16 +101,25 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
-        <!--桌面部件接守者-->
-        <receiver android:name="com.fjj.phoneprotect.engine.MyWidget" >
+        <!-- 桌面部件接守者 -->
+
+        <receiver
+            android:name=".receiver.MyWidget"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/process_widget_provider" />
         </receiver>
 
+        <service
+            android:name=".services.UpdateWidgetService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
