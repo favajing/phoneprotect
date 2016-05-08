@@ -123,9 +123,11 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.fjj.phoneprotect.killProcesses"></action>
+                <action android:name="com.fjj.phoneprotect.killProcesses" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".activities.TrafficManagerActivity"></activity>
     </application>
 
 </manifest>
