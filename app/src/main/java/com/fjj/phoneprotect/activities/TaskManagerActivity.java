@@ -74,7 +74,8 @@ public class TaskManagerActivity extends Activity {
         new Thread() {
             @Override
             public void run() {
-                //获取进程数据
+//                获取进程数据
+//                获取进程数据
                 List<TaskInfo> infos = TaskInfoProvider.findRunningProcessInfos(getApplicationContext());
                 userprocess = new ArrayList<TaskInfo>();
                 sysprocess = new ArrayList<TaskInfo>();
