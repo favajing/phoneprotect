@@ -127,7 +127,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.TrafficManagerActivity"></activity>
+        <activity android:name=".activities.TrafficManagerActivity" />
+        <activity android:name=".activities.AppLockActivity"></activity>
     </application>
 
 </manifest>

@@ -66,4 +66,7 @@ public class AtoolsActivity extends Activity {
             }
         }.start();
     }
+    public void lockapp(View view) {
+        IntentUtils.startActivity(this,AppLockActivity.class);
+    }
 }
