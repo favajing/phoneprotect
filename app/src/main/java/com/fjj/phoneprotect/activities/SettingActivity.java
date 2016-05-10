@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.fjj.phoneprotect.R;
 import com.fjj.phoneprotect.services.CallSmsSafeService;
 import com.fjj.phoneprotect.services.NumberAddressService;
+import com.fjj.phoneprotect.services.WatchDogService;
 import com.fjj.phoneprotect.ui.SettingChangeView;
 import com.fjj.phoneprotect.ui.SettingCheckedView;
 import com.fjj.phoneprotect.utils.ServiceStautsUtils;
@@ -35,6 +36,8 @@ public class SettingActivity extends Activity {
      * 归属地查询
      */
     SettingCheckedView scvnumberaddress;
+
+    SettingCheckedView scvwatchdog;
     /**
      * 提示框风格
      */
@@ -94,6 +97,7 @@ public class SettingActivity extends Activity {
             }
         });
 
+        scvwatchdog = (SettingCheckedView) findViewById(R.id.scv_watchdog);
         scvblacknumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +125,20 @@ public class SettingActivity extends Activity {
                 }
             }
         });
+
+        scvwatchdog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, WatchDogService.class);
+                if (scvwatchdog.isChecked()) {
+                    stopService(intent);
+                    scvwatchdog.setChecked(false);
+                } else {
+                    startService(intent);
+                    scvwatchdog.setChecked(true);
+                }
+            }
+        });
     }
 
     @Override
@@ -131,6 +149,8 @@ public class SettingActivity extends Activity {
 //归属地状态
         boolean numberaddressstate = ServiceStautsUtils.isServiceRunning(this, "com.fjj.phoneprotect.services.NumberAddressService");
         scvnumberaddress.setChecked(numberaddressstate);
+        boolean watchdogstate = ServiceStautsUtils.isServiceRunning(this, "com.fjj.phoneprotect.services.WatchDogService");
+        scvwatchdog.setChecked(watchdogstate);
         super.onStart();
     }
 }

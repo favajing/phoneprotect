@@ -108,8 +108,11 @@ public class AppLockActivity extends Activity {
                         dao.add(info.getApppackage());
                         lockappinfos.add(info);
                         unlockappinfos.remove(info);
+                        if (lockadapter != null){
+
+                            lockadapter.notifyDataSetChanged();
+                        }
                         notifyDataSetChanged();
-                        lockadapter.notifyDataSetChanged();
                     }
                 });
                 return view1;
@@ -180,7 +183,10 @@ public class AppLockActivity extends Activity {
                                 unlockappinfos.add(info);
                                 lockappinfos.remove(info);
                                 notifyDataSetChanged();
-                                unlockadapter.notifyDataSetChanged();
+                                if (unlockadapter != null){
+
+                                    unlockadapter.notifyDataSetChanged();
+                                }
                             }
                         });
                         return view1;

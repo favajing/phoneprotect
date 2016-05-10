@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:allowBackup="true"
@@ -128,7 +129,14 @@
         </receiver>
 
         <activity android:name=".activities.TrafficManagerActivity" />
-        <activity android:name=".activities.AppLockActivity"></activity>
+        <activity android:name=".activities.AppLockActivity" />
+
+        <service
+            android:name=".services.WatchDogService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".activities.EnterPassWordActivity" android:launchMode="singleInstance"></activity>
     </application>
 
 </manifest>
