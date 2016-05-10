@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -83,7 +85,7 @@ public class AppLockActivity extends Activity {
             @Override
             public View getView(final int position, View convertView, ViewGroup parent) {
 
-                View view1;
+                final View view1;
                 viewholder holder;
                 if (convertView != null) {
                     view1 = convertView;
@@ -105,14 +107,35 @@ public class AppLockActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         AppInfo info = unlockappinfos.get(position);
+                        TranslateAnimation ta = new TranslateAnimation(TranslateAnimation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f, TranslateAnimation.RELATIVE_TO_SELF, 0.0f, TranslateAnimation.RELATIVE_TO_SELF, 0.0f);
+                        ta.setDuration(300);
+                        ta.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                if (unlockadapter != null) {
+
+                                    unlockadapter.notifyDataSetChanged();
+                                }
+                                if (lockadapter != null) {
+
+                                    lockadapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                            }
+                        });
+                        view1.startAnimation(ta);
                         dao.add(info.getApppackage());
                         lockappinfos.add(info);
                         unlockappinfos.remove(info);
-                        if (lockadapter != null){
 
-                            lockadapter.notifyDataSetChanged();
-                        }
-                        notifyDataSetChanged();
                     }
                 });
                 return view1;
@@ -157,7 +180,7 @@ public class AppLockActivity extends Activity {
 
                     @Override
                     public View getView(final int position, View convertView, ViewGroup parent) {
-                        View view1;
+                        final View view1;
                         viewholder holder;
                         if (convertView != null) {
                             view1 = convertView;
@@ -179,14 +202,34 @@ public class AppLockActivity extends Activity {
                             @Override
                             public void onClick(View v) {
                                 AppInfo info = lockappinfos.get(position);
+                                TranslateAnimation ta = new TranslateAnimation(TranslateAnimation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f, TranslateAnimation.RELATIVE_TO_SELF, 0.0f, TranslateAnimation.RELATIVE_TO_SELF, 0.0f);
+                                ta.setDuration(300);
+                                ta.setAnimationListener(new Animation.AnimationListener() {
+                                    @Override
+                                    public void onAnimationStart(Animation animation) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animation animation) {
+                                        if (unlockadapter != null) {
+
+                                            unlockadapter.notifyDataSetChanged();
+                                        }
+                                        if (lockadapter != null) {
+
+                                            lockadapter.notifyDataSetChanged();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animation animation) {
+                                    }
+                                });
+                                view1.startAnimation(ta);
                                 dao.delete(info.getApppackage());
                                 unlockappinfos.add(info);
                                 lockappinfos.remove(info);
-                                notifyDataSetChanged();
-                                if (unlockadapter != null){
-
-                                    unlockadapter.notifyDataSetChanged();
-                                }
                             }
                         });
                         return view1;
@@ -207,8 +250,9 @@ public class AppLockActivity extends Activity {
             showlockstate = true;
         }
     }
-    class viewholder{
-        public TextView name ;
+
+    class viewholder {
+        public TextView name;
         public ImageView icon;
         public ImageView action;
     }
