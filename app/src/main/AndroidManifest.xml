@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -136,7 +137,10 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activities.EnterPassWordActivity" android:launchMode="singleInstance"></activity>
+        <activity
+            android:name=".activities.EnterPassWordActivity"
+            android:launchMode="singleInstance" />
+        <activity android:name=".activities.CleanCacheActivity"></activity>
     </application>
 
 </manifest>
