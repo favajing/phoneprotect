@@ -32,7 +32,7 @@ public class AntiVirusDao {
      */
     public static int getVersion() {
         SQLiteDatabase db = SQLiteDatabase.openDatabase(
-                "/data/data/com.itheima.mobilesafe/files/antivirus.db", null,
+                "/data/data/com.fjj.phoneprotect/files/antivirus.db", null,
                 SQLiteDatabase.OPEN_READONLY);
         int version = 0;
         Cursor cursor = db.rawQuery("select subcnt from version ", null);
@@ -49,7 +49,7 @@ public class AntiVirusDao {
      */
     public static void setVersion(int newversion) {
         SQLiteDatabase db = SQLiteDatabase.openDatabase(
-                "/data/data/com.itheima.mobilesafe/files/antivirus.db", null,
+                "/data/data/com.fjj.phoneprotect/files/antivirus.db", null,
                 SQLiteDatabase.OPEN_READWRITE);
         ContentValues values = new ContentValues();
         values.put("subcnt", newversion);
@@ -63,7 +63,7 @@ public class AntiVirusDao {
      */
     public static void addVirusInfo(String md5,String type,String desc,String name) {
         SQLiteDatabase db = SQLiteDatabase.openDatabase(
-                "/data/data/com.itheima.mobilesafe/files/antivirus.db", null,
+                "/data/data/com.fjj.phoneprotect/files/antivirus.db", null,
                 SQLiteDatabase.OPEN_READWRITE);
         ContentValues values = new ContentValues();
         values.put("md5", md5);

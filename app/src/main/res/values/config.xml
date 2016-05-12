@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="checkurl">http://10.10.1.28:2222/upload.json</string>
-    <string name="updatedburl">http://10.10.1.28:2222/updatedb.json</string>
+    <!--<string name="checkurl">http://10.10.1.28:2222/upload.json</string>-->
+    <!--<string name="updatedburl">http://10.10.1.28:2222/updatedb.json</string>-->
+    <string name="checkurl">http://192.168.31.231/upload.json</string>
+    <string name="updatedburl">http://192.168.31.231/updatedb.json</string>
 </resources>
