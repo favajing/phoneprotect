@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.fjj.phoneprotect.R;
+import com.fjj.phoneprotect.db.dao.AntiVirusDao;
 import com.fjj.phoneprotect.utils.AppInfoUtils;
 import com.fjj.phoneprotect.utils.IntentUtils;
 import com.fjj.phoneprotect.utils.StreamUtils;
@@ -61,7 +62,41 @@ public class SplashActivity extends Activity {
         //导入数据库文件到手机
         downloadDB("address.db");
         downloadDB("commonnum.db");
+        downloadDB("antivirus.db");
 
+        //查找更新数据库
+        updateDB();
+
+    }
+
+    private void updateDB() {
+        final String path = getString(R.string.updatedburl);
+        new Thread(){
+            public void run() {
+                try {
+                    URL url = new URL(path);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    InputStream is = conn.getInputStream();
+                    String jsonstr = StreamUtils.readStreamToString(is);
+                    JSONObject obj = new JSONObject(jsonstr);
+                    int serverversion = obj.getInt("version");
+                    int oldversion = AntiVirusDao.getVersion();
+                    if(serverversion>oldversion){
+                        Log.i(TAG, "有新的数据库需要更新");
+                        String md5 = obj.getString("md5");
+                        String type = obj.getString("type");
+                        String desc = obj.getString("desc");
+                        String name = obj.getString("name");
+                        AntiVirusDao.addVirusInfo(md5, type, desc, name);
+                        AntiVirusDao.setVersion(serverversion);
+                    }else{
+                        Log.i(TAG, "无需更新数据库信息");
+                    }
+                } catch (Exception e) {
+                    Log.i(TAG, "网络错误");
+                }
+            };
+        }.start();
     }
 
     private void downloadDB(String dbname) {

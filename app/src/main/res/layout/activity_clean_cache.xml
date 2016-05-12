@@ -6,17 +6,29 @@
     android:orientation="vertical"
     tools:context="com.fjj.phoneprotect.activities.CleanCacheActivity">
 
-    <TextView
-        style="@style/safe_text_title"
-        android:text="清理缓存" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/safe_text_title"
+            android:text="清理缓存" />
+        <Button
+            android:onClick="clearall"
+            android:text="清理缓存"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_cacheprogress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ProgressBar
+            android:indeterminateOnly="false"
             android:id="@+id/pb_clearcache"
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:progressDrawable="@drawable/progress_horizontal"
             android:layout_width="match_parent"
             android:layout_height="30dp" />
 
@@ -27,4 +39,8 @@
             android:layout_centerVertical="true"
             android:text="当前进度:" />
     </RelativeLayout>
+    <ListView
+        android:id="@+id/lv_cachelist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>
