@@ -2,13 +2,17 @@ package com.fjj.phoneprotect.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.InputFilter;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -31,7 +35,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,6 +45,7 @@ public class SplashActivity extends Activity {
 
     private static final String TAG = "SplashActivity";
     TextView tvverson;
+    private SharedPreferences sf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +58,8 @@ public class SplashActivity extends Activity {
         //初始化logger
         Logger.init("splash");
         //根据公共参数判断是否需要自动更新
-        SharedPreferences sf = getSharedPreferences("config", MODE_PRIVATE);
-        if (sf.getBoolean("update",false)){
+        sf = getSharedPreferences("config", MODE_PRIVATE);
+        if (sf.getBoolean("update", false)){
             checkVersion();
         }else{
             IntentUtils.startActivityAndFinish(SplashActivity.this,HomeActivity.class,2000);
@@ -64,9 +70,66 @@ public class SplashActivity extends Activity {
         downloadDB("commonnum.db");
         downloadDB("antivirus.db");
 
-        //查找更新数据库
+        //更新数据库
         updateDB();
 
+        //创建桌面快捷图标
+        installShortcut();
+
+        createStatusBarIcon();
+    }
+
+    /**
+     * 创建状态栏的图标
+     */
+    private void createStatusBarIcon() {
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification noti = new Notification(R.mipmap.ic_launcher, "黑马卫士正在保护您的手机", System.currentTimeMillis());
+
+        //加上标记可以防止用户清除
+//        noti.flags = Notification.FLAG_ONGOING_EVENT|Notification.FLAG_NO_CLEAR;
+        Intent intent = new Intent();
+        intent.setAction("com.fjj.phoneprotect.home");
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Method[] methods = Notification.class.getMethods();
+        for (Method method : methods) {
+            if ("setLatestEventInfo".equals(method.getName())){
+                try {
+                    method.invoke(noti,this, "黑马卫士", "正在保护您的手机", contentIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+//        noti.setLatestEventInfo(this, "黑马卫士", "正在保护您的手机", contentIntent);
+        mNotificationManager.notify(0, noti);
+
+    }
+
+    private void installShortcut() {
+        //添加参数判断是否已创建快捷图标
+        boolean hasshortcut = sf.getBoolean("hasshortcut", false);
+        if (!hasshortcut){
+            //申请广播意图
+            Intent broadintent = new Intent();
+            broadintent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+
+            //添加数据
+            //名称,图标,动作
+            broadintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "手机卫士");
+            broadintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+            Intent intent = new Intent();
+            intent.setAction("com.fjj.phoneprotect.home");
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            broadintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
+
+            sendBroadcast(broadintent);
+            SharedPreferences.Editor edit = sf.edit();
+            edit.putBoolean("hasshortcut",true);
+            edit.commit();
+        }
     }
 
     private void updateDB() {

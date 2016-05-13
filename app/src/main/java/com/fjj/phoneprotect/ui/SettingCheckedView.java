@@ -26,7 +26,7 @@ public class SettingCheckedView extends LinearLayout {
         initView(context);
         tvtitle = (TextView) findViewById(R.id.tv_uisetting_title);
         ckstate = (CheckBox) findViewById(R.id.cb_uisetting_state);
-        String bigtitle = attrs.getAttributeValue("http://schemas.android.com/apk/res/com.fjj.phoneprotect", "bigtitle");
+        String bigtitle = attrs.getAttributeValue("http://schemas.android.com/apk/res-auto", "bigtitle");
         tvtitle.setText(bigtitle);
     }
 

@@ -72,6 +72,11 @@ public class SettingActivity extends Activity {
                         scstyle.setDesc(items[which]);
                     }
                 });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                        throw  new NullPointerException("");
+                    }
+                });
                 builder.show();
             }
         });
