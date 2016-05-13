@@ -88,7 +88,7 @@ public class AntiVirusActivity extends Activity {
                             sb.append(str);
                         }
                         String md5 = sb.toString();
-                        Log.i(TAG, packinfo.applicationInfo.loadLabel(pm) + ":" + md5);
+//                        Log.i(TAG, packinfo.applicationInfo.loadLabel(pm) + ":" + md5);
                         // 检查md5的特征码在病毒数据库里面是否存在.
                         final String info = AntiVirusDao.isVirus(md5);
                         final String appname = packinfo.applicationInfo
