@@ -1,1 +1,1 @@
-include ':app', ':youkumenudemo', ':广告条'
+include ':app', ':youkumenudemo', ':广告条', ':downmenu'
