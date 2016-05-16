@@ -15,12 +15,18 @@ import android.view.View;
 public class MyButton extends View {
 
     private static final String TAG = "MyButton";
+    //底层图片
     private Bitmap backgroundmap;
+    //上层图片
     private Bitmap slide;
+    //画笔
     private Paint paint;
+    //上层图片左移长度
     private int slidedestence;
-    private boolean isopen;
+    //最大左移长度
     private int maxdes;
+    //开关状态
+    private boolean isopen;
     private float startx;
     private boolean isclick;
 
@@ -47,17 +53,17 @@ public class MyButton extends View {
         slide = BitmapFactory.decodeResource(getResources(), R.drawable.slide_button);
         //设置最大偏移
         maxdes = backgroundmap.getWidth() - slide.getWidth();
-
+        //设置触摸监听事件
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_DOWN: //按下
                         isclick = true;
                         startx = event.getRawX();
                         break;
-                    case MotionEvent.ACTION_MOVE:
+                    case MotionEvent.ACTION_MOVE: //移动
                         float rawX = event.getRawX();
                         float indexx = rawX - startx + slidedestence;
                         if (indexx > 10) {
@@ -73,7 +79,7 @@ public class MyButton extends View {
                         invalidate();
                         startx = rawX;
                         break;
-                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_UP: //抬起
                         if (isclick) {
                             isopen = !isopen;
                             if (isopen) {
