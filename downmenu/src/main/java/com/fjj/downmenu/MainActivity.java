@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         ppw.showAsDropDown(etcontent, 0, 0);
     }
 
-    private class MymyAdapter extends myAdapter {
+    private class MymyAdapter extends BaseAdapter {
 
 
         @Override
