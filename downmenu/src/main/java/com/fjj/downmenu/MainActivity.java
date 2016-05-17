@@ -16,6 +16,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @包名: com.fjj.downmenu
+ * @类名: MainActivity
+ * @创建者: 范晶晶
+ * @创建时间: 2016/5/17 15:33
+ * @描述 TODO
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     EditText etcontent;
@@ -26,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -38,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
             arr.add("我是谁" + i);
         }
 
-         lv = new ListView(this);
+
+        lv = new ListView(this);
         adapter = new MymyAdapter();
         lv.setAdapter(adapter);
     }
@@ -108,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class ViewHolder{
+    class ViewHolder {
         public TextView content;
         public ImageView ivdel;
     }
