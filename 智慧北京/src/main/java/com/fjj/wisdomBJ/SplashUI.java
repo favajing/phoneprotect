@@ -20,14 +20,16 @@ import com.fjj.wisdomBJ.utils.IntentUtils;
  * @创建时间: 2016/5/17 16:18
  * @描述 欢迎界面
  */
-public class SplashUI extends Activity {
+public class SplashUI extends Activity
+{
 
-    private static final java.lang.String KEY_FIRST_START = "firststart";
-    RelativeLayout rlbg;
-    private int duration  = 2000;
+    public static final java.lang.String KEY_FIRST_START = "firststart";
+    private static final int              duration        = 2000;
+    private RelativeLayout rlbg;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -36,17 +38,18 @@ public class SplashUI extends Activity {
         initView();
     }
 
-    private void initView() {
+    private void initView()
+    {
         //旋转
-        RotateAnimation ra = new RotateAnimation(0,360, Animation.RELATIVE_TO_SELF,0.5f, Animation.RELATIVE_TO_SELF,0.5f);
+        RotateAnimation ra = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         ra.setDuration(duration);
         ra.setFillAfter(true);
         //缩放
-        ScaleAnimation sa = new ScaleAnimation(0f,1f,0f,1f,Animation.RELATIVE_TO_SELF,0.5f, Animation.RELATIVE_TO_SELF,0.5f);
+        ScaleAnimation sa = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         sa.setDuration(duration);
         sa.setFillAfter(true);
         //透明度
-        AlphaAnimation aa = new AlphaAnimation(0f,1f);
+        AlphaAnimation aa = new AlphaAnimation(0f, 1f);
         aa.setDuration(duration);
         aa.setFillAfter(true);
 
@@ -54,24 +57,29 @@ public class SplashUI extends Activity {
         as.addAnimation(ra);
         as.addAnimation(sa);
         as.addAnimation(aa);
-        as.setAnimationListener(new Animation.AnimationListener() {
+        as.setAnimationListener(new Animation.AnimationListener()
+        {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
 
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                boolean firstview = CacheUtils.getBoolean(getApplicationContext(), KEY_FIRST_START, true);
-                if (firstview) {
-                    IntentUtils.startActivityAndFinish(SplashUI.this,GuideActivity.class);
+            public void onAnimationEnd(Animation animation)
+            {
+                boolean firstview = CacheUtils.getBoolean(getApplicationContext(), KEY_FIRST_START, false);
+                if (!firstview) {
+                    //显示引导页面
+                    IntentUtils.startActivityAndFinish(SplashUI.this, GuideActivity.class);
                 } else {
-
+                    IntentUtils.startActivityAndFinish(SplashUI.this, MainActivity.class);
                 }
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.fjj.wisdomBJ.UI.NoTouchViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></com.fjj.wisdomBJ.UI.NoTouchViewPager>
+
+    <RadioGroup
+        android:id="@+id/rg_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_tab_bg"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_home"
+            style="@style/tab_rb_style"
+            android:drawableTop="@drawable/content_home_selector"
+            android:textColor="@color/content_home_color"
+            android:text="首页"/>
+        <RadioButton
+            android:id="@+id/rb_news"
+            style="@style/tab_rb_style"
+            android:drawableTop="@drawable/content_news_selector"
+            android:textColor="@color/content_home_color"
+            android:text="新闻中心"/>
+        <RadioButton
+            android:id="@+id/rb_smart"
+            style="@style/tab_rb_style"
+            android:drawableTop="@drawable/content_smart_selector"
+            android:textColor="@color/content_home_color"
+            android:text="智慧服务"/>
+        <RadioButton
+            android:id="@+id/rb_gova"
+            style="@style/tab_rb_style"
+            android:drawableTop="@drawable/content_gova_selector"
+            android:textColor="@color/content_home_color"
+            android:text="政务"/>
+        <RadioButton
+            android:id="@+id/rb_setting"
+            style="@style/tab_rb_style"
+            android:drawableTop="@drawable/content_setting_selector"
+            android:textColor="@color/content_home_color"
+            android:text="设置"/>
+    </RadioGroup>
+</LinearLayout>
