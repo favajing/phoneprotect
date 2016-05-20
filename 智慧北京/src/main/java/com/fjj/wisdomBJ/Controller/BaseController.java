@@ -6,6 +6,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fjj.wisdomBJ.MainActivity;
 import com.fjj.wisdomBJ.R;
 
 /**
@@ -22,8 +23,8 @@ import com.fjj.wisdomBJ.R;
 
 public abstract class BaseController
 {
-    private   View           mBaseView;
-    private   Context        mContext;
+    protected   View           mBaseView;
+    protected   Context        mContext;
     protected ImageButton    mMenu;
     protected TextView       mTitle;
     protected RelativeLayout mContent;
@@ -51,10 +52,24 @@ public abstract class BaseController
         mMenu = (ImageButton) view.findViewById(R.id.ib_base_menu);
         mTitle = (TextView) view.findViewById(R.id.tv_base_title);
         mContent = (RelativeLayout) view.findViewById(R.id.rl_base_content);
+
+        mMenu.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //点击按钮显示/隐藏侧滑菜单
+                ((MainActivity)mContext).getSlidingMenu().toggle();
+            }
+        });
         return view;
     }
 
     protected void initData(Context context)
     {
+    }
+
+    public void switchContent(int position){
+
     }
 }

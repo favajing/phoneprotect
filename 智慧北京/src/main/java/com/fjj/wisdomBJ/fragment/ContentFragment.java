@@ -40,6 +40,7 @@ public class ContentFragment extends BaseFragment
     @ViewInject(R.id.rg_content)
     private RadioGroup           mRg;
     private List<BaseController> mControllers;
+    private int                  currentItem;
 
     @Override
     protected View initView()
@@ -58,6 +59,7 @@ public class ContentFragment extends BaseFragment
     {
         super.initData();
 
+
         mControllers = new ArrayList<>();
         //添加首页控制器
         mControllers.add(new HomeController(mActivity));
@@ -73,6 +75,13 @@ public class ContentFragment extends BaseFragment
 
         //设置默认选中button
         mRg.check(R.id.rb_home);
+
+        currentItem = 0;
+    }
+
+    public void switchContent(int position)
+    {
+        mControllers.get(currentItem).switchContent(position);
     }
 
     private class ContentOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener
@@ -83,24 +92,29 @@ public class ContentFragment extends BaseFragment
             switch (checkedId) {
                 case R.id.rb_home:
                     //切换viewpage
-                    mVpcontent.setCurrentItem(0);
+                    currentItem = 0;
+                    mVpcontent.setCurrentItem(currentItem);
                     //设置侧边栏不可滑动
                     setSlidingMode(false);
                     break;
                 case R.id.rb_news:
-                    mVpcontent.setCurrentItem(1);
+                    currentItem = 1;
+                    mVpcontent.setCurrentItem(currentItem);
                     setSlidingMode(true);
                     break;
                 case R.id.rb_smart:
-                    mVpcontent.setCurrentItem(2);
+                    currentItem = 2;
+                    mVpcontent.setCurrentItem(currentItem);
                     setSlidingMode(true);
                     break;
                 case R.id.rb_gova:
-                    mVpcontent.setCurrentItem(3);
+                    currentItem = 3;
+                    mVpcontent.setCurrentItem(currentItem);
                     setSlidingMode(true);
                     break;
                 case R.id.rb_setting:
-                    mVpcontent.setCurrentItem(4);
+                    currentItem = 4;
+                    mVpcontent.setCurrentItem(currentItem);
                     setSlidingMode(false);
                     break;
             }
@@ -109,6 +123,7 @@ public class ContentFragment extends BaseFragment
 
     /**
      * 设置侧边栏是否可以滑动出现
+     *
      * @param istouch
      */
     private void setSlidingMode(boolean istouch)

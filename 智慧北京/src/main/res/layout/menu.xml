@@ -3,6 +3,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
              android:id="@+id/fl_fragment_menu"
-             android:background="#37e766"
+             android:background="#000000"
     >
 </FrameLayout>

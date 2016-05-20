@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.fjj.wisdomBJ"
@@ -25,4 +26,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile project(':sliding_menu')
     compile files('libs/xUtils-2.6.14.jar')
+    compile files('libs/gson-2.2.1.jar')
 }
