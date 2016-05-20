@@ -37,8 +37,8 @@ public class MainActivity extends SlidingFragmentActivity
 //         sm.setMode(SlidingMenu.LEFT_RIGHT);
 //         sm.setSecondaryMenu(R.layout.menu);//设置右菜单
         // 4.设置菜单宽度
-        mSlidingMenu.setBehindWidth(550);
-        // mMenu.setBehindOffset(150);
+//        mSlidingMenu.setBehindWidth(550);
+        mSlidingMenu.setBehindOffset(150);
         // 5.设置Touch Mode Above
         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
@@ -59,18 +59,24 @@ public class MainActivity extends SlidingFragmentActivity
 
         ft.commit();
     }
+
     //获取menuFragment
-    public MenuFragment getMenuFragment(){
+    public MenuFragment getMenuFragment()
+    {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         return (MenuFragment) manager.findFragmentByTag(TAG_MENU);
     }
+
     //获取menuFragment
-    public ContentFragment getContentFragment(){
+    public ContentFragment getContentFragment()
+    {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         return (ContentFragment) manager.findFragmentByTag(TAG_CONTENT);
     }
+
     //切换侧滑
-    public void toggleSlidingMenu(){
+    public void toggleSlidingMenu()
+    {
         mSlidingMenu.toggle();
     }
 }
