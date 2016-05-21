@@ -3,6 +3,7 @@ package com.fjj.wisdomBJ.Controller;
 import android.content.Context;
 import android.nfc.Tag;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.fjj.wisdomBJ.Controller.News.InteractMenuController;
@@ -42,6 +43,8 @@ public class NewsController extends BaseController
 
     private static final String TAG = "NewsController";
     private List<NewsBaseController> mListControllers;
+    private NewsCenterDomain         mData;
+    private FrameLayout              mFramelayout;
 
     public NewsController(Context context)
     {
@@ -55,21 +58,20 @@ public class NewsController extends BaseController
     }
 
     @Override
-    protected void initData(Context context)
+    protected View initContentView(Context context)
     {
-        super.initData(context);
+        //添加子视图
+        mFramelayout = new FrameLayout(context);
+
+        return mFramelayout;
+    }
+
+    @Override
+    public void initData(Context context)
+    {
         mTitle.setText("新闻中心");
         mMenu.setVisibility(View.VISIBLE);
-
         String url = mContext.getString(R.string.url);
-
-        mListControllers = new ArrayList<>();
-        mListControllers.add(new NewsMenuController(mContext));
-        mListControllers.add(new TopicMenuController(mContext));
-        mListControllers.add(new PicMenuController(mContext));
-        mListControllers.add(new InteractMenuController(mContext));
-
-        switchContent(0);
 
         //获取网络数据
         HttpUtils http = new HttpUtils();
@@ -99,21 +101,44 @@ public class NewsController extends BaseController
 
     public void switchContent(int position)
     {
-        mContent.removeAllViews();
+        if (mListControllers != null) {
+            mFramelayout.removeAllViews();
 
-        mContent.addView(mListControllers.get(position).getmBaseView());
+            NewsBaseController news = mListControllers.get(position);
+            mFramelayout.addView(news.getmBaseView());
+            news.initData(mContext);
+
+            mTitle.setText(mData.data.get(position).title);
+        }
     }
 
     private void processData(String result)
     {
-        Gson   gson = new Gson();
-        NewsCenterDomain data = gson.fromJson(result, NewsCenterDomain.class);
-        //bean
-        String title = data.data.get(0).children.get(0).title;
-        LoggerUtils.w(TAG,title);
+        Gson gson = new Gson();
+        mData = gson.fromJson(result, NewsCenterDomain.class);
+        mListControllers = new ArrayList<>();
+
+        for (NewsCenterDomain.NewsCenterMenuDomain newsmenu : mData.data) {
+            switch (newsmenu.type) {
+                case 1:
+                    mListControllers.add(new NewsMenuController(mContext, newsmenu.children));
+                    break;
+                case 10:
+                    mListControllers.add(new TopicMenuController(mContext, newsmenu.children));
+                    break;
+                case 2:
+                    mListControllers.add(new PicMenuController(mContext, newsmenu.children));
+                    break;
+                case 3:
+                    mListControllers.add(new InteractMenuController(mContext, newsmenu.children));
+                    break;
+            }
+        }
 
         //把参数传递给menuFragment
-        ((MainActivity)mContext).getMenuFragment().setData(data.data);
+        ((MainActivity) mContext).getMenuFragment().setData(mData.data);
+
+        switchContent(0);
     }
 
 }

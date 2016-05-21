@@ -27,14 +27,17 @@ public class GovaController extends BaseController
     }
 
     @Override
-    protected void initData(Context context)
+    protected View initContentView(Context context)
     {
-        super.initData(context);
         mTv = new TextView(context);
         mTv.setTextSize(30);
-        mTv.setText("政务内容");
-        mContent.addView(mTv);
+        return mTv;
+    }
 
+    @Override
+    public void initData(Context context)
+    {
+        mTv.setText("政务内容");
         mTitle.setText("政务");
         mMenu.setVisibility(View.VISIBLE);
     }

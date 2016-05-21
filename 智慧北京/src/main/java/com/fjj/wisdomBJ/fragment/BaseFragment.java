@@ -41,7 +41,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
     }
     //界面创建完成后执行
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
         initData();

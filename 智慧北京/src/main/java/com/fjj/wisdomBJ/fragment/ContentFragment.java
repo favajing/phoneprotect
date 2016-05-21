@@ -93,31 +93,27 @@ public class ContentFragment extends BaseFragment
                 case R.id.rb_home:
                     //切换viewpage
                     currentItem = 0;
-                    mVpcontent.setCurrentItem(currentItem);
                     //设置侧边栏不可滑动
                     setSlidingMode(false);
                     break;
                 case R.id.rb_news:
                     currentItem = 1;
-                    mVpcontent.setCurrentItem(currentItem);
                     setSlidingMode(true);
                     break;
                 case R.id.rb_smart:
                     currentItem = 2;
-                    mVpcontent.setCurrentItem(currentItem);
                     setSlidingMode(true);
                     break;
                 case R.id.rb_gova:
                     currentItem = 3;
-                    mVpcontent.setCurrentItem(currentItem);
                     setSlidingMode(true);
                     break;
                 case R.id.rb_setting:
                     currentItem = 4;
-                    mVpcontent.setCurrentItem(currentItem);
                     setSlidingMode(false);
                     break;
             }
+            mVpcontent.setCurrentItem(currentItem);
         }
     }
 
@@ -147,6 +143,8 @@ public class ContentFragment extends BaseFragment
             BaseController ctl  = mControllers.get(position);
             View           view = ctl.getmBaseView();
             container.addView(view);
+
+            ctl.initData(mActivity);
             return view;
         }
 

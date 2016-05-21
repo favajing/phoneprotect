@@ -2,9 +2,19 @@ package com.fjj.wisdomBJ.Controller.News;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.fjj.wisdomBJ.Domain.NewsCenterDomain;
+import com.fjj.wisdomBJ.R;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
+import java.util.List;
 
 /**
  * @项目名: mobilesafe
@@ -21,30 +31,66 @@ import android.widget.TextView;
 public class NewsMenuController extends NewsBaseController
 {
 
-    private TextView mtv;
+    private final List<NewsCenterDomain.NewsDomain> mListMenus;//新闻数据
+    @ViewInject(R.id.vp_newsmenu)
+    private       ViewPager                         vp;//viewpage
 
-    public NewsMenuController(Context mContext)
+    public NewsMenuController(Context mContext, List<NewsCenterDomain.NewsDomain> children)
     {
         super(mContext);
-
-        initData(mContext);
+        mListMenus = children;
     }
 
     @Override
     public View initView(Context mContext)
     {
-        mtv = new TextView(mContext);
-        mtv.setTextSize(24);
-        mtv.setGravity(Gravity.CENTER);
-        mtv.setTextColor(Color.RED);
+        View view = View.inflate(mContext, R.layout.newsmenu_activity, null);
+        //注入
+        ViewUtils.inject(this, view);
 
-        return mtv;
+        return view;
     }
 
     @Override
-    protected void initData(Context context)
+    public void initData(Context context)
     {
-        // 设置实体数据
-        mtv.setText("新闻菜单对应的页面");
+        vp.setAdapter(new NewsMenuPagerAdapter());
+    }
+
+    private class NewsMenuPagerAdapter extends PagerAdapter
+    {
+        @Override
+        public int getCount()
+        {
+            if (mListMenus != null) {
+                return mListMenus.size();
+            }
+            return 0;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position)
+        {
+            TextView tv = new TextView(mContext);
+            tv.setText(mListMenus.get(position).title);
+            tv.setTextSize(24);
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextColor(Color.RED);
+            container.addView(tv);
+
+            return tv;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object)
+        {
+            return view == object;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object)
+        {
+            container.removeView((View) object);
+        }
     }
 }

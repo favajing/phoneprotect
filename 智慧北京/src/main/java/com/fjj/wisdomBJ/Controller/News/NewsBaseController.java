@@ -38,7 +38,7 @@ public abstract class NewsBaseController
 
     public abstract View initView(Context mContext);
 
-    protected void initData(Context context)
+    public void initData(Context context)
     {
     }
 }

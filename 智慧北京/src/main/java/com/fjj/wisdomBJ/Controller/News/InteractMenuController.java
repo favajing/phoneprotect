@@ -6,6 +6,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.fjj.wisdomBJ.Domain.NewsCenterDomain;
+
+import java.util.List;
+
 /**
  * @项目名: mobilesafe
  * @包名: com.fjj.wisdomBJ.Controller.News
@@ -23,7 +27,7 @@ public class InteractMenuController extends NewsBaseController
 
     private TextView mtv;
 
-    public InteractMenuController(Context mContext)
+    public InteractMenuController(Context mContext, List<NewsCenterDomain.NewsDomain> children)
     {
         super(mContext);
         initData(mContext);
@@ -41,7 +45,7 @@ public class InteractMenuController extends NewsBaseController
     }
 
     @Override
-    protected void initData(Context context)
+    public void initData(Context context)
     {
         // 设置实体数据
         mtv.setText("互动菜单对应的页面");

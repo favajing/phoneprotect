@@ -1,1 +1,2 @@
 include ':app', ':youkumenudemo', ':广告条', ':downmenu', ':自定义按钮', ':智慧北京',':sliding_menu'
+include ':ViewPagerIndicator'

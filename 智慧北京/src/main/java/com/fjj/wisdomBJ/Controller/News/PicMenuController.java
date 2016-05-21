@@ -6,6 +6,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.fjj.wisdomBJ.Domain.NewsCenterDomain;
+
+import java.util.List;
+
 /**
  * @项目名: mobilesafe
  * @包名: com.fjj.wisdomBJ.Controller.News
@@ -23,7 +27,7 @@ public class PicMenuController extends NewsBaseController
 
     private TextView mtv;
 
-    public PicMenuController(Context mContext)
+    public PicMenuController(Context mContext, List<NewsCenterDomain.NewsDomain> children)
     {
         super(mContext);
 
@@ -42,7 +46,7 @@ public class PicMenuController extends NewsBaseController
     }
 
     @Override
-    protected void initData(Context context)
+    public void initData(Context context)
     {
         // 设置实体数据
         mtv.setText("组图菜单对应的页面");
