@@ -85,6 +85,7 @@ public class NewsController extends BaseController
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
+                LoggerUtils.i(TAG,"访问了网络!!!!!!");
                 String result = responseInfo.result;
                 //解析数据
                 processData(result);

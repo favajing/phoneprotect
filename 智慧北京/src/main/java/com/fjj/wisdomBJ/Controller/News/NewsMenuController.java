@@ -7,12 +7,16 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fjj.wisdomBJ.Domain.NewsCenterDomain;
+import com.fjj.wisdomBJ.MainActivity;
 import com.fjj.wisdomBJ.R;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.List;
 
@@ -34,6 +38,10 @@ public class NewsMenuController extends NewsBaseController
     private final List<NewsCenterDomain.NewsDomain> mListMenus;//新闻数据
     @ViewInject(R.id.vp_newsmenu)
     private       ViewPager                         vp;//viewpage
+    @ViewInject(R.id.tpi_newsmenu)
+    private       TabPageIndicator                  tpi;//viewpage
+    @ViewInject(R.id.iv_newsmenu_next)
+    private       ImageView                         ivnext;//imageview
 
     public NewsMenuController(Context mContext, List<NewsCenterDomain.NewsDomain> children)
     {
@@ -55,6 +63,45 @@ public class NewsMenuController extends NewsBaseController
     public void initData(Context context)
     {
         vp.setAdapter(new NewsMenuPagerAdapter());
+        //填充插件
+        tpi.setViewPager(vp);
+
+        tpi.setOnPageChangeListener(new NewsMenuOnPageChangeListener());
+
+        ivnext.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                vp.setCurrentItem(vp.getCurrentItem() + 1);
+            }
+        });
+    }
+    //判断是否允许侧滑展开menu菜单
+    private  class NewsMenuOnPageChangeListener implements ViewPager.OnPageChangeListener
+    {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+        {
+
+        }
+
+        @Override
+        public void onPageSelected(int position)
+        {
+            SlidingMenu sm = ((MainActivity) mContext).getSlidingMenu();
+            if(position <= 0){
+                sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+            }else {
+                sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state)
+        {
+
+        }
     }
 
     private class NewsMenuPagerAdapter extends PagerAdapter
@@ -62,7 +109,8 @@ public class NewsMenuController extends NewsBaseController
         @Override
         public int getCount()
         {
-            if (mListMenus != null) {
+            if (mListMenus != null)
+            {
                 return mListMenus.size();
             }
             return 0;
@@ -79,6 +127,12 @@ public class NewsMenuController extends NewsBaseController
             container.addView(tv);
 
             return tv;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position)
+        {
+            return mListMenus.get(position).title;
         }
 
         @Override

@@ -43,6 +43,8 @@ public class MenuFragment extends BaseFragment
     protected View initView()
     {
         mListView = new ListView(mActivity);
+        //去除横线
+        mListView.setDividerHeight(0);
         mListView.setCacheColorHint(Color.TRANSPARENT);
         //去掉listview点击后的背景颜色
         mListView.setSelector(new ColorDrawable(Color.TRANSPARENT));

@@ -17,7 +17,7 @@ import android.view.MotionEvent;
  * @更新描述:
  */
 
-public class NoTouchViewPager extends ViewPager
+public class NoTouchViewPager extends LazyViewPager
 {
     public NoTouchViewPager(Context context)
     {
@@ -39,5 +39,11 @@ public class NoTouchViewPager extends ViewPager
     public boolean onInterceptTouchEvent(MotionEvent ev)
     {
         return false;
+    }
+
+    @Override
+    public void setOffscreenPageLimit(int limit)
+    {
+        super.setOffscreenPageLimit(limit);
     }
 }
