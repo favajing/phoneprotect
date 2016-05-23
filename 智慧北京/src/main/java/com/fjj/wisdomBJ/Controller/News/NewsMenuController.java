@@ -119,14 +119,15 @@ public class NewsMenuController extends NewsBaseController
         @Override
         public Object instantiateItem(ViewGroup container, int position)
         {
-            TextView tv = new TextView(mContext);
-            tv.setText(mListMenus.get(position).title);
-            tv.setTextSize(24);
-            tv.setGravity(Gravity.CENTER);
-            tv.setTextColor(Color.RED);
-            container.addView(tv);
+            String url = mListMenus.get(position).url;
 
-            return tv;
+            NewsListPageController npc = new NewsListPageController(mContext,url);
+
+            container.addView(npc.getmBaseView());
+
+            npc.initData(mContext);
+
+            return npc.getmBaseView();
         }
 
         @Override

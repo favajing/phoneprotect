@@ -14,6 +14,7 @@ import com.fjj.wisdomBJ.Controller.SettingController;
 import com.fjj.wisdomBJ.Controller.SmartController;
 import com.fjj.wisdomBJ.MainActivity;
 import com.fjj.wisdomBJ.R;
+import com.fjj.wisdomBJ.UI.LazyViewPager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -36,7 +37,7 @@ import java.util.List;
 public class ContentFragment extends BaseFragment
 {
     @ViewInject(R.id.vp_content)
-    private ViewPager            mVpcontent;
+    private LazyViewPager        mVpcontent;
     @ViewInject(R.id.rg_content)
     private RadioGroup           mRg;
     private List<BaseController> mControllers;

@@ -2,6 +2,7 @@ package com.fjj.wisdomBJ.Controller;
 
 import android.content.Context;
 import android.nfc.Tag;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.fjj.wisdomBJ.Controller.News.TopicMenuController;
 import com.fjj.wisdomBJ.Domain.NewsCenterDomain;
 import com.fjj.wisdomBJ.MainActivity;
 import com.fjj.wisdomBJ.R;
+import com.fjj.wisdomBJ.utils.CacheUtils;
 import com.fjj.wisdomBJ.utils.LoggerUtils;
 import com.fjj.wisdomBJ.utils.ToastUtils;
 import com.google.gson.Gson;
@@ -41,7 +43,8 @@ import java.util.List;
 public class NewsController extends BaseController
 {
 
-    private static final String TAG = "NewsController";
+    private static final String TAG             = "NewsController";
+    private static final long   TIME_DIFFERENCE = 2 * 60 * 1000;
     private List<NewsBaseController> mListControllers;
     private NewsCenterDomain         mData;
     private FrameLayout              mFramelayout;
@@ -71,7 +74,19 @@ public class NewsController extends BaseController
     {
         mTitle.setText("新闻中心");
         mMenu.setVisibility(View.VISIBLE);
-        String url = mContext.getString(R.string.url);
+        final String url = mContext.getString(R.string.url);
+
+        //缓存数据
+        String urldata = CacheUtils.getString(mContext, url);
+        if (!TextUtils.isEmpty(urldata)) {
+            //指定时间间隔内读取缓存不访问网络
+            Long timeDifference = CacheUtils.getLong(mContext, url + "_date");
+            if (System.currentTimeMillis() - timeDifference < TIME_DIFFERENCE){
+                LoggerUtils.i(TAG,"加载缓存!!!!!!");
+                processData(urldata);
+                return;
+            }
+        }
 
         //获取网络数据
         HttpUtils http = new HttpUtils();
@@ -87,6 +102,9 @@ public class NewsController extends BaseController
             {
                 LoggerUtils.i(TAG,"访问了网络!!!!!!");
                 String result = responseInfo.result;
+                //记录到缓存,时间
+                CacheUtils.setString(mContext, url, result);
+                CacheUtils.setLong(mContext, url + "_date", System.currentTimeMillis());
                 //解析数据
                 processData(result);
             }
@@ -95,7 +113,7 @@ public class NewsController extends BaseController
             public void onFailure(HttpException e, String s)
             {
                 //请求失败
-                LoggerUtils.w(TAG, s);
+                LoggerUtils.w(TAG, "网络错误:" + s);
             }
         });
     }
