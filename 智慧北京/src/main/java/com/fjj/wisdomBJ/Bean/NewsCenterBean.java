@@ -1,4 +1,4 @@
-package com.fjj.wisdomBJ.Domain;
+package com.fjj.wisdomBJ.Bean;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @更新描述:
  */
 
-public class NewsCenterDomain
+public class NewsCenterBean
 {
     public List<NewsCenterMenuDomain> data;
     public List<Integer>        extend;

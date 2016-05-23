@@ -6,7 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.fjj.wisdomBJ.Domain.NewsCenterDomain;
+import com.fjj.wisdomBJ.Bean.NewsCenterBean;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class TopicMenuController extends NewsBaseController
 
     private TextView mtv;
 
-    public TopicMenuController(Context mContext, List<NewsCenterDomain.NewsDomain> children)
+    public TopicMenuController(Context mContext, List<NewsCenterBean.NewsDomain> children)
     {
         super(mContext);
         initData(mContext);

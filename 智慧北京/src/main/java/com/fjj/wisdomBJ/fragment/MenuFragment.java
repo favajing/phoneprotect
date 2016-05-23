@@ -2,7 +2,6 @@ package com.fjj.wisdomBJ.fragment;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.fjj.wisdomBJ.Domain.NewsCenterDomain;
+import com.fjj.wisdomBJ.Bean.NewsCenterBean;
 import com.fjj.wisdomBJ.MainActivity;
 import com.fjj.wisdomBJ.R;
 
@@ -34,10 +33,10 @@ import java.util.List;
 public class MenuFragment extends BaseFragment
 {
 
-    private ListView                                    mListView;
-    private List<NewsCenterDomain.NewsCenterMenuDomain> mData;
-    private int                                         mCurrentPosition;//当前选中的菜单
-    private MenuFragmentAdapter                         adapter;
+    private ListView                                  mListView;
+    private List<NewsCenterBean.NewsCenterMenuDomain> mData;
+    private int                                       mCurrentPosition;//当前选中的菜单
+    private MenuFragmentAdapter                       adapter;
 
     @Override
     protected View initView()
@@ -61,7 +60,7 @@ public class MenuFragment extends BaseFragment
      *
      * @param datas
      */
-    public void setData(List<NewsCenterDomain.NewsCenterMenuDomain> datas)
+    public void setData(List<NewsCenterBean.NewsCenterMenuDomain> datas)
     {
         mData = datas;
         adapter = new MenuFragmentAdapter();

@@ -1,16 +1,13 @@
 package com.fjj.wisdomBJ.Controller.News;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.fjj.wisdomBJ.Domain.NewsCenterDomain;
+import com.fjj.wisdomBJ.Bean.NewsCenterBean;
 import com.fjj.wisdomBJ.MainActivity;
 import com.fjj.wisdomBJ.R;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -35,15 +32,15 @@ import java.util.List;
 public class NewsMenuController extends NewsBaseController
 {
 
-    private final List<NewsCenterDomain.NewsDomain> mListMenus;//新闻数据
+    private final List<NewsCenterBean.NewsDomain> mListMenus;//新闻数据
     @ViewInject(R.id.vp_newsmenu)
-    private       ViewPager                         vp;//viewpage
+    private       ViewPager                       vp;//viewpage
     @ViewInject(R.id.tpi_newsmenu)
-    private       TabPageIndicator                  tpi;//viewpage
+    private       TabPageIndicator                tpi;//viewpage
     @ViewInject(R.id.iv_newsmenu_next)
-    private       ImageView                         ivnext;//imageview
+    private       ImageView                       ivnext;//imageview
 
-    public NewsMenuController(Context mContext, List<NewsCenterDomain.NewsDomain> children)
+    public NewsMenuController(Context mContext, List<NewsCenterBean.NewsDomain> children)
     {
         super(mContext);
         mListMenus = children;
@@ -77,8 +74,9 @@ public class NewsMenuController extends NewsBaseController
             }
         });
     }
+
     //判断是否允许侧滑展开menu菜单
-    private  class NewsMenuOnPageChangeListener implements ViewPager.OnPageChangeListener
+    private class NewsMenuOnPageChangeListener implements ViewPager.OnPageChangeListener
     {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
