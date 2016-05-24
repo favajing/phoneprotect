@@ -109,7 +109,6 @@ public class NewsListPageController extends NewsBaseController
         });
     }
 
-    //TODO   解析数据
     private void processData(String result)
     {
         Gson gs = new Gson();
