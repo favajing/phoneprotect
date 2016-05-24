@@ -25,6 +25,15 @@
             android:layout_marginLeft="10dp"
             android:textColor="#ffffff"
             android:text="我是图片说明文字"/>
+        <LinearLayout
+            android:id="@+id/ll_newslistpage_point"
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>
 </LinearLayout>

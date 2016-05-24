@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fjj.wisdomBJ.Bean.NewsListPagerBean;
@@ -42,8 +43,10 @@ public class NewsListPageController extends NewsBaseController
     private       ViewPager         mVppic;
     @ViewInject(R.id.tv_newslistpage_title)
     private       TextView          mTvtitle;
+    @ViewInject(R.id.ll_newslistpage_point)
+    private       LinearLayout      mLLContine;
     private       NewsListPagerBean mNewsListDatas;
-    private BitmapUtils mBitmap;
+    private       BitmapUtils       mBitmap;
 
     public NewsListPageController(Context mContext, String url)
     {
@@ -77,7 +80,23 @@ public class NewsListPageController extends NewsBaseController
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 processData(responseInfo.result);
+                //设置title
                 mTvtitle.setText(mNewsListDatas.data.topnews.get(0).title);
+                int index = 0;
+                //添加圆点
+                for (NewsListPagerBean.NewsTopNewsBean topnew : mNewsListDatas.data.topnews)
+                {
+                    ImageView iv = new ImageView(mContext);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                    params.leftMargin = 10;
+                    iv.setLayoutParams(params);
+
+                    iv.setImageResource(index == 0 ? R.drawable.dot_focus : R.drawable.dot_normal);
+                    mLLContine.addView(iv);
+                    index++;
+                }
+
                 mVppic.setAdapter(new NewsListPagePagerAdapter());
                 mVppic.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
                 {
@@ -90,6 +109,10 @@ public class NewsListPageController extends NewsBaseController
                     @Override
                     public void onPageSelected(int position)
                     {
+                        for (int i = 0; i < mLLContine.getChildCount(); i++)
+                        {
+                            ((ImageView) mLLContine.getChildAt(i)).setImageResource(position == i ? R.drawable.dot_focus : R.drawable.dot_normal);
+                        }
                         mTvtitle.setText(mNewsListDatas.data.topnews.get(position).title);
                     }
 
