@@ -41,7 +41,7 @@ public class NewsController extends BaseController
 {
 
     private static final String TAG             = "NewsController";
-    private static final long   TIME_DIFFERENCE = 2 * 60 * 1000;
+    public static final long   TIME_DIFFERENCE = 2 * 60 * 1000;
     private List<NewsBaseController> mListControllers;
     private NewsCenterBean           mData;
     private FrameLayout              mFramelayout;
