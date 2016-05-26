@@ -4,6 +4,7 @@ import android.content.Context;
 import android.nfc.Tag;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.fjj.wisdomBJ.Bean.NewsListPagerBean;
 import com.fjj.wisdomBJ.R;
+import com.fjj.wisdomBJ.utils.CacheUtils;
 import com.fjj.wisdomBJ.utils.LoggerUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
@@ -72,70 +74,76 @@ public class NewsListPageController extends NewsBaseController
         //访问网络
         String url = mContext.getString(R.string.baseurl) + mUrl;
 
-        HttpUtils httpUtils = new HttpUtils();
-
-        httpUtils.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
+        //读取缓存
+        String newscache = CacheUtils.getString(mContext, url);
+        if (!TextUtils.isEmpty(newscache)){
+            processData(newscache);
+        }else {
+            HttpUtils httpUtils = new HttpUtils();
+            httpUtils.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>()
             {
-                processData(responseInfo.result);
-                //设置title
-                mTvtitle.setText(mNewsListDatas.data.topnews.get(0).title);
-                int index = 0;
-                //添加圆点
-                for (NewsListPagerBean.NewsTopNewsBean topnew : mNewsListDatas.data.topnews)
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo)
                 {
-                    ImageView iv = new ImageView(mContext);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                    params.leftMargin = 10;
-                    iv.setLayoutParams(params);
-
-                    iv.setImageResource(index == 0 ? R.drawable.dot_focus : R.drawable.dot_normal);
-                    mLLContine.addView(iv);
-                    index++;
+                    processData(responseInfo.result);
                 }
-
-                mVppic.setAdapter(new NewsListPagePagerAdapter());
-                mVppic.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+                @Override
+                public void onFailure(HttpException e, String s)
                 {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
-                    {
+                    LoggerUtils.e(TAG, "网络失败:" + s);
+                }
+            });
+        }
 
-                    }
-
-                    @Override
-                    public void onPageSelected(int position)
-                    {
-                        for (int i = 0; i < mLLContine.getChildCount(); i++)
-                        {
-                            ((ImageView) mLLContine.getChildAt(i)).setImageResource(position == i ? R.drawable.dot_focus : R.drawable.dot_normal);
-                        }
-                        mTvtitle.setText(mNewsListDatas.data.topnews.get(position).title);
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state)
-                    {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s)
-            {
-                LoggerUtils.e(TAG, "网络失败:" + s);
-            }
-        });
     }
 
     private void processData(String result)
     {
         Gson gs = new Gson();
         mNewsListDatas = gs.fromJson(result, NewsListPagerBean.class);
+
+        //设置title
+        mTvtitle.setText(mNewsListDatas.data.topnews.get(0).title);
+        int index = 0;
+        //添加圆点
+        for (NewsListPagerBean.NewsTopNewsBean topnew : mNewsListDatas.data.topnews)
+        {
+            ImageView iv = new ImageView(mContext);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            params.leftMargin = 10;
+            iv.setLayoutParams(params);
+
+            iv.setImageResource(index == 0 ? R.drawable.dot_focus : R.drawable.dot_normal);
+            mLLContine.addView(iv);
+            index++;
+        }
+
+        mVppic.setAdapter(new NewsListPagePagerAdapter());
+        mVppic.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                for (int i = 0; i < mLLContine.getChildCount(); i++)
+                {
+                    ((ImageView) mLLContine.getChildAt(i)).setImageResource(position == i ? R.drawable.dot_focus : R.drawable.dot_normal);
+                }
+                mTvtitle.setText(mNewsListDatas.data.topnews.get(position).title);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state)
+            {
+
+            }
+        });
 
     }
 
