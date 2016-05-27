@@ -28,6 +28,7 @@ public class TouchedNewListViewPager extends ViewPager
 
     private static final String TAG = "TouchedNewListViewPager";
     private float mDownx;
+    private float mDowny;
 
     public TouchedNewListViewPager(Context context)
     {
@@ -48,22 +49,32 @@ public class TouchedNewListViewPager extends ViewPager
         {
             case MotionEvent.ACTION_DOWN:
                 mDownx = ev.getX();
+                mDowny = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
                 float movex = ev.getX();
                 float diff = movex - mDownx;
-                if (position == 0)
-                {
+
+                float movey = ev.getY();
+                float diffy = movey - mDowny;
+                if (position != 0 && Math.abs(diff) > 0 && Math.abs(diff) < 5){
                     getParent().requestDisallowInterceptTouchEvent(false);
-                } else if (position == getAdapter().getCount() - 1)
-                {
-                    //最后位置,右滑拦截
-                    if (diff > 0){
-                        getParent().requestDisallowInterceptTouchEvent(true);
-                    }else { //最后位置,左滑不拦截
+                }else {
+
+                    if (position == 0)
+                    {
                         getParent().requestDisallowInterceptTouchEvent(false);
+                    } else if (position == getAdapter().getCount() - 1)
+                    {
+                        //最后位置,右滑拦截
+                        if (diff > 0){
+                            getParent().requestDisallowInterceptTouchEvent(true);
+                        }else { //最后位置,左滑不拦截
+                            getParent().requestDisallowInterceptTouchEvent(false);
+                        }
                     }
                 }
+
                 break;
             case MotionEvent.ACTION_UP:
                 break;

@@ -2,6 +2,7 @@ package com.fjj.wisdomBJ.UI;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -19,7 +20,9 @@ public class RerushListView extends ListView
 
 
     private RelativeLayout mRlMain;
-    private LinearLayout mView;
+    private LinearLayout   mView;
+    private float          mStarty;
+    private int mMeasuredheight;
 
     public RerushListView(Context context)
     {
@@ -42,13 +45,37 @@ public class RerushListView extends ListView
 
         addHeaderView(mView);
 
-        mRlMain.measure(0,0);
-        int height = mRlMain.getMeasuredHeight();
+        mRlMain.measure(0, 0);
+        mMeasuredheight = mRlMain.getMeasuredHeight();
 
-        mView.setPadding(0,-height,0,0);
+        mView.setPadding(0, -mMeasuredheight, 0, 0);
     }
 
     public void addFLView(View view){
         mView.addView(view);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev)
+    {
+        switch (ev.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                mStarty = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float movey = ev.getY();
+                int diffy = (int) (movey - mStarty);
+                int firstvis = getFirstVisiblePosition();
+                if (firstvis == 0){
+
+                    mView.setPadding(0, diffy - mMeasuredheight, 0, 0);
+                }
+
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+        return super.onTouchEvent(ev);
     }
 }
