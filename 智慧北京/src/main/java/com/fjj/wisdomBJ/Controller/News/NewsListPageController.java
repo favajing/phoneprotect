@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.fjj.wisdomBJ.Bean.NewsListPagerBean;
 import com.fjj.wisdomBJ.Controller.NewsController;
 import com.fjj.wisdomBJ.R;
+import com.fjj.wisdomBJ.UI.RerushListView;
 import com.fjj.wisdomBJ.utils.CacheUtils;
 import com.fjj.wisdomBJ.utils.LoggerUtils;
 import com.google.gson.Gson;
@@ -56,7 +57,7 @@ public class NewsListPageController extends NewsBaseController
     @ViewInject(R.id.ll_newslistpage_point)
     private       LinearLayout                         mLLContine;
     @ViewInject(R.id.lv_newlistpage_news)
-    private       ListView                             mNewsListView;
+    private       RerushListView                       mNewsListView;
     private       NewsListPagerBean                    mNewsListDatas;
     private       BitmapUtils                          mBitmap;
     private       AutoSwitchPicTask                    mAutoSwitchPic;
@@ -82,7 +83,7 @@ public class NewsListPageController extends NewsBaseController
 
         ViewUtils.inject(this, view2);
 
-        mNewsListView.addHeaderView(view2);
+        mNewsListView.addFLView(view2);
 
         return view;
     }
