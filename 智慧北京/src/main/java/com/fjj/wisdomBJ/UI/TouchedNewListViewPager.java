@@ -40,6 +40,7 @@ public class TouchedNewListViewPager extends ViewPager
         super(context, attrs);
     }
 
+    //拦截父窗体的touch事件
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev)
     {
@@ -53,11 +54,12 @@ public class TouchedNewListViewPager extends ViewPager
                 break;
             case MotionEvent.ACTION_MOVE:
                 float movex = ev.getX();
-                float diff = movex - mDownx;
+                float diffx = movex - mDownx;
 
                 float movey = ev.getY();
                 float diffy = movey - mDowny;
-                if (position != 0 && Math.abs(diff) > 0 && Math.abs(diff) < 5){
+                //y轴不拦截,以便于下拉刷新
+                if (Math.abs(diffy) >  Math.abs(diffx) ){
                     getParent().requestDisallowInterceptTouchEvent(false);
                 }else {
 
@@ -67,7 +69,7 @@ public class TouchedNewListViewPager extends ViewPager
                     } else if (position == getAdapter().getCount() - 1)
                     {
                         //最后位置,右滑拦截
-                        if (diff > 0){
+                        if (diffx > 0){
                             getParent().requestDisallowInterceptTouchEvent(true);
                         }else { //最后位置,左滑不拦截
                             getParent().requestDisallowInterceptTouchEvent(false);
