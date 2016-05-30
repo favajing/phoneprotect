@@ -6,7 +6,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import com.fjj.wisdomBJ.R;
 import com.fjj.wisdomBJ.utils.LoggerUtils;
+import com.nineoldandroids.animation.ValueAnimator;
 
 
 /**
@@ -37,10 +37,12 @@ public class RerushListView extends ListView
     private TextView        mTvdate;
     private ImageView       mIvarrow;
     private ProgressBar     mPbpregress;
-    private float           mStarty;
+    private int           mStarty;
     private int             mMeasuredheight;
     private RotateAnimation mUPAnimation;
     private RotateAnimation mDOWNAnimation;
+    private int             mPaddingTop;
+    private onRefreshView   mMyListen;
     
     public RerushListView(Context context)
     {
@@ -83,6 +85,7 @@ public class RerushListView extends ListView
 
         mRlMain.measure(0, 0);
         mMeasuredheight = mRlMain.getMeasuredHeight();
+        mPaddingTop = -mMeasuredheight;
 
         mView.setPadding(0, -mMeasuredheight, 0, 0);
     }
@@ -99,39 +102,124 @@ public class RerushListView extends ListView
         switch (ev.getAction())
         {
             case MotionEvent.ACTION_DOWN:
-                mStarty = ev.getY();
+                mStarty = (int) (ev.getY() + 0.5f);
                 break;
             case MotionEvent.ACTION_MOVE:
+                int moveY = (int) (ev.getY() + 0.5f);
+
+                float diffY = moveY - mStarty;
                 float movey = ev.getY();
                 int diffy = (int) (movey - mStarty);
+                mPaddingTop = diffy - mMeasuredheight;
+                //判断当前状态,如果是正在刷新在不响应
+                if (currentstate == SATATE_RERUSHING)
+                {
+                    break;
+                }
+                // 如果第一个View是可见的情况下，并且headerView完全可见的情况下
+                if (mView != null)
+                {
+                    // 如果CustomHeaderView没有完全露出来，不去响应下拉刷新
+
+                    // 取出listView的左上角的点
+                    int[] lliw = new int[2];
+                    this.getLocationInWindow(lliw);
+
+
+                    // 取出customheaderView左上角的点
+                    int[] hliw = new int[2];
+                    mView.getLocationInWindow(hliw);
+
+
+                    if (hliw[1] < lliw[1])
+                    {
+                        // 不响应下拉刷新
+                        return super.onTouchEvent(ev);
+                    }
+                }
+
                 int firstvis = getFirstVisiblePosition();
                 if (firstvis == 0)
                 {
-                    int paddingTop = diffy - mMeasuredheight;
-                    mView.setPadding(0, paddingTop, 0, 0);
-                    LoggerUtils.w(TAG, paddingTop + "");
-                    if (paddingTop < 0 && currentstate != SATATE_DOWNRERUSH)
+                    if (diffY > 0)
                     {
-                        //下拉刷新
-                        currentstate = SATATE_DOWNRERUSH;
-                        rerushUI();
-                    } else if (paddingTop >= 0 && currentstate != SATATE_UPERUSH)
-                    {
-                        //上拉刷新
-                        currentstate = SATATE_UPERUSH;
-                        rerushUI();
 
+
+                        mView.setPadding(0, mPaddingTop, 0, 0);
+                        LoggerUtils.w(TAG, mPaddingTop + "");
+                        if (mPaddingTop < 0 && currentstate != SATATE_DOWNRERUSH)
+                        {
+                            //下拉刷新
+                            currentstate = SATATE_DOWNRERUSH;
+                            rerushUI();
+                        } else if (mPaddingTop >= 0 && currentstate != SATATE_UPERUSH)
+                        {
+                            //上拉刷新
+                            currentstate = SATATE_UPERUSH;
+                            rerushUI();
+
+                        }
+                        //消费掉,响应touch
+                        return true;
                     }
-                    //消费掉
-                    return true;
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
+                mStarty = 0;// 清空数据
+
+                if (getFirstVisiblePosition() == 0)
+                {
+                    //释放刷新
+                    if (currentstate == SATATE_UPERUSH)
+                    {
+                        //松开刷新
+                        mView.setPadding(0, 0, 0, 0);
+                        currentstate = SATATE_RERUSHING;
+                        int start = mPaddingTop;
+                        int end = 0;
+                        doHeaderAnimation(start, end);
+                        rerushUI();
+                        //调用刷新接口
+                        if (mMyListen != null)
+                        {
+                            mMyListen.RefreshView();
+                        }
+
+                    } else if (currentstate == SATATE_DOWNRERUSH)
+                    { //下拉刷新状态
+                        mView.setPadding(0, -mMeasuredheight, 0, 0);
+                        int start = mPaddingTop;
+                        int end = -mMeasuredheight;
+                        doHeaderAnimation(start, end);
+                    }
+                    mPaddingTop = -mMeasuredheight;
+                }
+
 
                 break;
         }
         return super.onTouchEvent(ev);
+    }
+
+    private void doHeaderAnimation(int start, int end)
+    {
+        // 模拟数据的变化 100-->0 100,90,80
+        ValueAnimator animator;
+        animator = ValueAnimator.ofInt(start, end);
+        animator.setDuration(300);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+        {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation)
+            {
+                int animatedValue = (Integer) animation.getAnimatedValue();
+
+                mView.setPadding(0, animatedValue, 0, 0);
+            }
+        });
+        animator.start();
     }
 
     private void rerushUI()
@@ -159,7 +247,39 @@ public class RerushListView extends ListView
                 mPbpregress.setVisibility(View.INVISIBLE);
                 break;
             case SATATE_RERUSHING:
+                //文字上拉刷新
+                mTvstate.setText("正在刷新...");
+                //箭头动画
+
+                mIvarrow.clearAnimation();
+
+                //箭头显示,进度隐藏
+                mIvarrow.setVisibility(View.INVISIBLE);
+                mPbpregress.setVisibility(View.VISIBLE);
                 break;
         }
+    }
+
+    public void setOnRefreshView(onRefreshView listen)
+    {
+        mMyListen = listen;
+    }
+
+    public interface onRefreshView
+    {
+        void RefreshView();
+    }
+
+    public void RerushSecuss()
+    {
+        currentstate = SATATE_DOWNRERUSH;
+        // UI更新
+        rerushUI();
+
+        // 做动画
+        int start = 0;
+        int end   = -mMeasuredheight;
+        doHeaderAnimation(start, end);
+
     }
 }
