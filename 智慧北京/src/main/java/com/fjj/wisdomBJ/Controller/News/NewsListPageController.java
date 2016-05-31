@@ -1,6 +1,7 @@
 package com.fjj.wisdomBJ.Controller.News;
 
 import android.content.Context;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,10 +20,13 @@ import android.widget.TextView;
 
 import com.fjj.wisdomBJ.Bean.NewsListPagerBean;
 import com.fjj.wisdomBJ.Controller.NewsController;
+import com.fjj.wisdomBJ.DetailActivity;
+import com.fjj.wisdomBJ.MainActivity;
 import com.fjj.wisdomBJ.R;
 import com.fjj.wisdomBJ.UI.RerushListView;
 import com.fjj.wisdomBJ.utils.CacheUtils;
 import com.fjj.wisdomBJ.utils.LoggerUtils;
+import com.fjj.wisdomBJ.utils.ToastUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -203,6 +208,17 @@ public class NewsListPageController extends NewsBaseController
             }
         });
         mNewsListView.setAdapter(new NewsBaseAdapter());
+        mNewsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                String newsurl = mContext.getString(R.string.baseurl) + mNewsList.get(position).url;
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("newsurl", newsurl);
+                mContext.startActivity(intent);
+            }
+        });
     }
     //设置下拉刷新接口
     private  class NewsListPageonRefreshView implements RerushListView.onRefreshView
