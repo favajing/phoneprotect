@@ -3,10 +3,10 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- iBeanconåŠŸèƒ½æ‰€éœ€æƒé™ -->;
+    <!-- iBeancon¹¦ÄÜËùÐèÈ¨ÏÞ -->;
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <!-- ä¸ªæŽ¨3.0ç”µå­å›´æ åŠŸèƒ½æ‰€éœ€æƒé™ -->
+    <!-- ¸öÍÆ3.0µç×ÓÎ§À¸¹¦ÄÜËùÐèÈ¨ÏÞ -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -37,6 +37,8 @@
                 <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
             </intent-filter>
         </receiver>
+        <activity android:name=".DetailActivity">
+        </activity>
     </application>
 
 </manifest>

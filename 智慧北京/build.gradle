@@ -35,6 +35,7 @@ dependencies {
     compile files('libs/xUtils-2.6.14.jar')
     compile files('libs/gson-2.2.1.jar')
     compile 'com.getui:sdk:2.8.1.0'
+    compile files('libs/nineoldandroids-2.4.0.jar')
     compile 'com.getui:ext:2.0.3'
     compile 'com.android.support:support-v4:+'
     compile files('libs/GetuiExt-2.0.3.jar')
