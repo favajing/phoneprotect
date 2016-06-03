@@ -11,6 +11,12 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+                GETUI_APP_ID : "NdkNllBwuW56oFxmjvIpW3",
+                GETUI_APP_KEY : "DiSVAs8BCQ8lPypZxGyTj7",
+                GETUI_APP_SECRET : "U4cYgDyaCc8YJ4MTOMYzw",
+                PACKAGE_NAME : applicationId
+        ]
     }
     buildTypes {
         release {
@@ -28,4 +34,9 @@ dependencies {
     compile project(':ViewPagerIndicator')
     compile files('libs/xUtils-2.6.14.jar')
     compile files('libs/gson-2.2.1.jar')
+    compile 'com.getui:sdk:2.8.1.0'
+    compile 'com.getui:ext:2.0.3'
+    compile 'com.android.support:support-v4:+'
+    compile files('libs/GetuiExt-2.0.3.jar')
+    compile files('libs/GetuiSDK2.8.1.0.jar')
 }

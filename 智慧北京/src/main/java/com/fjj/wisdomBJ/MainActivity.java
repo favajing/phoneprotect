@@ -9,6 +9,8 @@ import com.fjj.wisdomBJ.fragment.MenuFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
+import com.igexin.sdk.PushManager;
+
 /**
  * @包名: com.fjj.wisdomBJ
  * @类名: MainActivity
@@ -47,6 +49,8 @@ public class MainActivity extends SlidingFragmentActivity
 
         //初始化界面
         initFragment();
+
+        PushManager.getInstance().initialize(this.getApplicationContext());
     }
 
     private void initFragment()
