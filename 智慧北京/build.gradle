@@ -15,7 +15,7 @@ android {
                 GETUI_APP_ID : "NdkNllBwuW56oFxmjvIpW3",
                 GETUI_APP_KEY : "DiSVAs8BCQ8lPypZxGyTj7",
                 GETUI_APP_SECRET : "U4cYgDyaCc8YJ4MTOMYzw",
-                PACKAGE_NAME : applicationId
+                PACKAGE_NAME : "com.fjj.wisdomBJ"
         ]
     }
     buildTypes {
